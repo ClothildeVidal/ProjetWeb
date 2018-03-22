@@ -14,8 +14,8 @@
     </head>
     <body>
         <form action="<c:url value='/' />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
-            Identifiant (admin) : <input name='idAdmin'><br>
-            Mot de passe (ABCD): <input name='mdpAdmin' type='password'><br>
+            Identifiant  : <input name='idAdmin'><br>
+            Mot de passe : <input name='mdpAdmin' type='password'><br>
             <input type='submit' name='action' value='Connexion'>
         </form>
     </body>

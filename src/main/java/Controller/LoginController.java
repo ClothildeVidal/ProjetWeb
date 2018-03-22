@@ -39,23 +39,25 @@ public class LoginController extends HttpServlet {
         String jspView;
         if (null == userName) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
-            jspView = "loginAdmin.jsp";
+            jspView = "login.jsp";
 
         } else { // L'utilisateur est connecté
-            // On choisit la page d'affichage
-            if 
-            
+            // On choisit la page d'affichage           
             // Si c'est un administrateur
-            
+            if("Dupont".equals(userName)) {
+                jspView = "affiche.jsp";
+            } else {
+                jspView = "login.jsp";
+            }
             // Si c'est un client
-            
-            
-            jspView = "affiche.jsp";
-        }
+
+        }        
         // On va vers la page choisie
         request.getRequestDispatcher(jspView).forward(request, response);
 
     }
+
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -106,7 +108,7 @@ public class LoginController extends HttpServlet {
         String password = getInitParameter("password");
         String userName = getInitParameter("userName");
 
-        if ((idAdmin.equals(idAdmin) && (mdpAdmin.equals(mdpAdmin)))) {
+        if ((login.equals(idAdmin) && (password.equals(mdpAdmin)))) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session

@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  *
  * @author asanto01
  */
-public class ExtendedDAO {
+public class ExtendedDAO extends DAO {
     public ExtendedDAO(DataSource dataSource) {
 		super(dataSource);
 	}	

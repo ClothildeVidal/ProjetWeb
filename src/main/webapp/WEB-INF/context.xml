@@ -14,7 +14,7 @@
         </init-param>
         <init-param>
             <param-name>userName</param-name>
-            <param-value>Mr.Dupont-User</param-value>
+            <param-value>Dupont</param-value>
         </init-param>
     </servlet>
     

@@ -15,12 +15,6 @@
 	<body>
 		<h1>Bienvenue ${userName}</h1>
 		Vous avez maintenant accès aux fichiers dans le répertoire 
-		"<a href="<c:url value="protected/protectedPage2.html"/>">protected</a>".<br>
 
-		<form action="<c:url value="/"/>" method="POST"> 
-			<input type='submit' name='action' value='logout'>
-		</form>
-		<hr/>
-		<h3>Il y a actuellement ${applicationScope.numberConnected} utilisateurs connectés</h3>
 	</body>
 </html>
