@@ -10,12 +10,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Administrateur</title>
+        <title>Page de connexion</title>
     </head>
     <body>
         <form action="<c:url value='/' />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
-            Identifiant (admin) : <input name='idAdmin'><br>
-            Mot de passe (ABCD): <input name='mdpAdmin' type='password'><br>
+            Identifiant : <input name='identifiant'><br>
+            Mot de passe : <input name='motDePasse' type='password'><br>
             <input type='submit' name='action' value='Connexion'>
         </form>
     </body>

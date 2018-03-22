@@ -20,12 +20,6 @@ public class ExtendedDAO {
 		super(dataSource);
 	}	
 
-	/**
-	 * Liste des codes d'états des USA présents dans la table CUSTOMER
-	 *
-	 * @return la liste des états
-	 * @throws DAOException
-	 */
 	public List<String> commandesExistantes() throws DAOexception {
 		List<String> result = new LinkedList<>();
 		String sql = "SELECT PRODUCT_ID FROM PURCHASE_ORDER WHERECUSTOMER_ID=?";
