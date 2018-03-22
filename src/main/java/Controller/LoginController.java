@@ -39,11 +39,11 @@ public class LoginController extends HttpServlet {
         String jspView;
         if (null == userName) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
-            jspView = "loginAdmin.jsp";
+            jspView = "login.jsp";
 
         } else { // L'utilisateur est connecté
             // On choisit la page d'affichage
-            jspView = "affiche.jsp";
+            jspView = "afficheClient.jsp";
         }
         // On va vers la page choisie
         request.getRequestDispatcher(jspView).forward(request, response);
