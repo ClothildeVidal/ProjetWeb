@@ -11,10 +11,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import javax.sql.DataSource;
-/**
- *
- * @author asanto01
- */
+
+
 public class ExtendedDAO extends DAO {
     public ExtendedDAO(DataSource dataSource) {
 		super(dataSource);

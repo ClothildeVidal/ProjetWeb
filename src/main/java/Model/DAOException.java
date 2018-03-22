@@ -5,10 +5,6 @@
  */
 package Model;
 
-/**
- *
- * @author asanto01
- */
 class DAOException extends Exception {
 
     DAOException(String message) {

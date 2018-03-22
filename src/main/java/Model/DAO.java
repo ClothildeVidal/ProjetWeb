@@ -4,109 +4,60 @@
  * and open the template in the editor.
  */
 package Model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
-/**
- *
- * @author asanto01
- */
+
 public class DAO {
-    protected final DataSource myDataSource;
 
-	public DAO(DataSource dataSource) {
-		this.myDataSource = dataSource;
-	}
-	
-	/**
-	 * Trouver un Customer à partir de sa clé
-	 *
-	 * @param customerID la clé du CUSTOMER à rechercher
-     * @param emailCustomer
-     * @throws Model.DAOException
-    	 * @throws DAOException
-	 */
-	public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
-		CustomerEntity result = null;
+    public final DataSource myDataSource;
 
-		String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ? AND CUSTOMER_EMAIL = ?";
-		try (Connection connection = myDataSource.getConnection(); // On crée un statement pour exécuter une requête
-			PreparedStatement stmt = connection.prepareStatement(sql)) {
+    /**
+     * Construit le AO avec sa source de données
+     *
+     * @param dataSource la source de données à utiliser
+     */
+    public DAO(DataSource dataSource) {
+        this.myDataSource = dataSource;
+    }
 
-			stmt.setInt(1, customerID);
-                        stmt.setString(2, emailCustomer);
-                        
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) { // On a trouvé
-					String name = rs.getString("NAME");
-                                        String adresse = rs.getString("ADRESSE");
-					// On crée l'objet "entity"
-					result = new CustomerEntity(customerID, name, adresse, emailCustomer);
-				} // else on n'a pas trouvé, on renverra null
-			}
-		}  catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOException(ex.getMessage());
-		}
+    /**
+     * Contenu de la table DISCOUNT_CODE
+     *
+     * @return Liste des discount codes
+     * @throws SQLException renvoyées par JDBC
+     */
+    public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
+        CustomerEntity result = null;
 
-		return result;
-	}
+        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ? AND CUSTOMER_EMAIL = ?";
+        try (Connection connection = myDataSource.getConnection(); // On crée un statement pour exécuter une requête
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        
-        
-        
-        
-        
-        
-	/**
-	 * Liste des clients localisés dans un état des USA
-	 *
-	 * @param state l'état à rechercher (2 caractères)
-	 * @return la liste des clients habitant dans cet état
-	 * @throws DAOException
-	 */
-        
-        
-        /*
-	public List<CustomerEntity> customersInState(String state) throws DAOexception {
-		List<CustomerEntity> result = new LinkedList<>(); // Liste vIde
+            stmt.setInt(1, customerID);
+            stmt.setString(2, emailCustomer);
 
-		String sql = "SELECT * FROM CUSTOMER WHERE STATE = ?";
-		try (Connection connection = myDataSource.getConnection();
-			PreparedStatement stmt = connection.prepareStatement(sql)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // On a trouvé
+                    String name = rs.getString("NAME");
+                    String adresse = rs.getString("ADRESSE");
+                    // On crée l'objet "entity"
+                    result = new CustomerEntity(customerID, emailCustomer);
+                } // else on n'a pas trouvé, on renverra null
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
+        }
 
-			stmt.setString(1, state);
+        return result;
+    }
 
-			try (ResultSet rs = stmt.executeQuery()) {
-				while (rs.next()) { // Tant qu'il y a des enregistrements
-					// On récupère les champs nécessaires de l'enregistrement courant
-					int id = rs.getInt("CUSTOMER_ID");
-					String name = rs.getString("NAME");
-					String address = rs.getString("ADDRESSLINE1");
-					// On crée l'objet entité
-					CustomerEntity c = new CustomerEntity(id, name, address);
-					// On l'ajoute à la liste des résultats
-					result.add(c);
-				}
-			}
-		}  catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOexception(ex.getMessage());
-		}
-
-		return result;
-
-	}
-
-*/
-        
-        
-        
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	 version="3.0">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controller.LoginController</servlet-class>
+        <!-- Les identifiants pour se connecter -->
+        <init-param>
+            <param-name>loginParam</param-name>
+            <param-value>untel</param-value>
+        </init-param>
+        <init-param>
+            <param-name>passwordParam</param-name>
+            <param-value>ABCD</param-value>
+        </init-param>
+        <init-param>
+            <param-name>userName</param-name>
+            <param-value>Administrateur</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+
+    <filter-mapping>
+        <filter-name>ProtectedPagesFilter</filter-name>
+        <url-pattern>/protected/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+       
+    <welcome-file-list>
+        <welcome-file>LoginController</welcome-file>
+    </welcome-file-list>
+</web-app>

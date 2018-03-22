@@ -7,28 +7,20 @@ package Model;
 
 /**
  *
- * @author asanto01
+ * @author anaii
  */
-public class CustomerEntity {
-    private int customerId;
-    private String name;
+class CustomerEntity {
+     private String email;
 
-    public CustomerEntity(int customerId, String name) {
-        this.customerId = customerId;
-        this.name = name;
+    private int id;
+
+    public CustomerEntity(int customerID, String emailCustomer) {
+        this.id = customerID;
+        this.email = emailCustomer;
     }
 
-    CustomerEntity(int customerID, String name, String adresse, String emailCustomer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * Get the value of customerId
-     *
-     * @return the value of customerId
-     */
-    public int getCustomerId() {
-        return customerId;
+        public int getCustomerId() {
+        return id;
     }
 
     /**
@@ -36,7 +28,8 @@ public class CustomerEntity {
      *
      * @return the value of name
      */
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
+
 }

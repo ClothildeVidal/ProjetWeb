@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Controller;
 
 import java.io.IOException;
@@ -21,35 +26,27 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Quelle action a appelé cette servlet ?
-        String action = request.getParameter("action");
-        if (null != action) {
-            switch (action) {
-                case "Connexion":
-                    checkLogin(request);
-                    break;
-                case "logout":
-                    doLogout(request);
-                    break;
-            }
-        }
+		String action = request.getParameter("action");
+		if (null != action) {
+			switch (action) {
+				case "login":
+					checkLogin(request);
+					break;
+				case "logout":
+					doLogout(request);
+					break;
+			}
+		}
 
-        // Est-ce que l'utilisateur est connecté ?
-        // On cherche l'attribut userName dans la session
+
         String userName = findUserInSession(request);
         String jspView;
         if (null == userName) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
-            jspView = "login.jsp";
+            jspView = "index.jsp";
 
-        } else { // L'utilisateur est connecté
-            // On choisit la page d'affichage           
-            // Si c'est un administrateur
-            if("Dupont".equals(userName)) {
-                jspView = "affiche.jsp";
-            } else {
-                jspView = "login.jsp";
-            }
-            // Si c'est un client
+        } else { 
+            jspView="affiche.jsp";
 
         }        
         // On va vers la page choisie
@@ -100,15 +97,15 @@ public class LoginController extends HttpServlet {
 
     private void checkLogin(HttpServletRequest request) {
         // Les paramètres transmis dans la requête
-        String idAdmin = request.getParameter("idAdmin");
-        String mdpAdmin = request.getParameter("mdpAdmin");
+        String loginParam = request.getParameter("loginParam");
+        String passwordParam = request.getParameter("passwordParam");
 
         // Le login/password défini dans web.xml
-        String login = getInitParameter("login");
-        String password = getInitParameter("password");
-        String userName = getInitParameter("userName");
-
-        if ((login.equals(idAdmin) && (password.equals(mdpAdmin)))) {
+		String login = getInitParameter("login");
+		String password = getInitParameter("password");
+		String userName = getInitParameter("userName");
+                
+        if ((login.equals(loginParam) && (password.equals(passwordParam )))) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
