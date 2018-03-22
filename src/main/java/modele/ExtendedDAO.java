@@ -26,7 +26,7 @@ public class ExtendedDAO {
 	 * @return la liste des états
 	 * @throws DAOException
 	 */
-	public List<String> commandesExistantes() throws DAOexception {
+	public List<String> commandesExistantes() throws DAOException {
 		List<String> result = new LinkedList<>();
 		String sql = "SELECT PRODUCT_ID FROM PURCHASE_ORDER WHERECUSTOMER_ID=?";
 		try (	Connection connection = myDataSource.getConnection(); 
@@ -37,7 +37,7 @@ public class ExtendedDAO {
 				result.add(commande);
 			}
 		} catch (SQLException e) {
-			throw new DAOexception(e.getMessage());
+			throw new DAOException(e.getMessage());
 		}
 		return result;
 	}

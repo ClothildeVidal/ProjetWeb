@@ -18,6 +18,10 @@ public class CustomerEntity {
         this.name = name;
     }
 
+    CustomerEntity(int customerID, String name, String adresse, String emailCustomer) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Get the value of customerId
      *

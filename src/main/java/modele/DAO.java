@@ -29,32 +29,42 @@ public class DAO {
 	 * Trouver un Customer à partir de sa clé
 	 *
 	 * @param customerID la clé du CUSTOMER à rechercher
-	 * @return l'enregistrement correspondant dans la table CUSTOMER, ou null si pas trouvé
-	 * @throws DAOException
+     * @param emailCustomer
+     * @throws modele.DAOException
+    	 * @throws DAOException
 	 */
-	public CustomerEntity findCustomer(int customerID) throws DAOexception {
+	public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
 		CustomerEntity result = null;
 
-		String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ?";
+		String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ? AND CUSTOMER_EMAIL = ?";
 		try (Connection connection = myDataSource.getConnection(); // On crée un statement pour exécuter une requête
 			PreparedStatement stmt = connection.prepareStatement(sql)) {
 
 			stmt.setInt(1, customerID);
+                        stmt.setString(2, emailCustomer);
+                        
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) { // On a trouvé
 					String name = rs.getString("NAME");
+                                        String adresse = rs.getString("ADRESSE");
 					// On crée l'objet "entity"
-					result = new CustomerEntity(customerID, name);
+					result = new CustomerEntity(customerID, name, adresse, emailCustomer);
 				} // else on n'a pas trouvé, on renverra null
 			}
 		}  catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOexception(ex.getMessage());
+			throw new DAOException(ex.getMessage());
 		}
 
 		return result;
 	}
 
+        
+        
+        
+        
+        
+        
 	/**
 	 * Liste des clients localisés dans un état des USA
 	 *
@@ -62,6 +72,9 @@ public class DAO {
 	 * @return la liste des clients habitant dans cet état
 	 * @throws DAOException
 	 */
+        
+        
+        /*
 	public List<CustomerEntity> customersInState(String state) throws DAOexception {
 		List<CustomerEntity> result = new LinkedList<>(); // Liste vIde
 
@@ -91,4 +104,9 @@ public class DAO {
 		return result;
 
 	}
+
+*/
+        
+        
+        
 }

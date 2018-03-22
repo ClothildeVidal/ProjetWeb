@@ -43,6 +43,13 @@ public class LoginController extends HttpServlet {
 
         } else { // L'utilisateur est connecté
             // On choisit la page d'affichage
+            if 
+            
+            // Si c'est un administrateur
+            
+            // Si c'est un client
+            
+            
             jspView = "affiche.jsp";
         }
         // On va vers la page choisie
@@ -99,7 +106,7 @@ public class LoginController extends HttpServlet {
         String password = getInitParameter("password");
         String userName = getInitParameter("userName");
 
-        if ((login.equals(idAdmin) && (password.equals(mdpAdmin)))) {
+        if ((idAdmin.equals(idAdmin) && (mdpAdmin.equals(mdpAdmin)))) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
