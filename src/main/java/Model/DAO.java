@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modele;
+package Model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +30,7 @@ public class DAO {
 	 *
 	 * @param customerID la clé du CUSTOMER à rechercher
      * @param emailCustomer
-     * @throws modele.DAOException
+     * @throws Model.DAOException
     	 * @throws DAOException
 	 */
 	public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
