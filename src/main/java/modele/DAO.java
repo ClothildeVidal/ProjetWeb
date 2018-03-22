@@ -25,29 +25,6 @@ public class DAO {
 		this.myDataSource = dataSource;
 	}
 	
-
-	public int numberOfOrdersForCustomer(int customerId) throws DAOexception {
-		int result = 0;
-
-		// Une requête SQL paramétrée
-		String sql = "SELECT COUNT(*) AS NUMBER FROM PURCHASE_ORDER WHERE CUSTOMER_ID = ?";
-		try (   Connection connection = myDataSource.getConnection();
-			PreparedStatement stmt = connection.prepareStatement(sql)
-                ) {
-                        // Définir la valeur du paramètre
-			stmt.setInt(1, customerId);
-
-			try (ResultSet rs = stmt.executeQuery()) {
-				rs.next(); // On a toujours exactement 1 enregistrement dans le résultat
-				result = rs.getInt("NUMBER");
-			}
-		}  catch (SQLException ex) {
-			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-			throw new DAOexception(ex.getMessage());
-		}
-		return result;
-	}
-
 	/**
 	 * Trouver un Customer à partir de sa clé
 	 *
@@ -66,9 +43,8 @@ public class DAO {
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) { // On a trouvé
 					String name = rs.getString("NAME");
-					String address = rs.getString("ADDRESSLINE1");
 					// On crée l'objet "entity"
-					result = new CustomerEntity(customerID, name, address);
+					result = new CustomerEntity(customerID, name);
 				} // else on n'a pas trouvé, on renverra null
 			}
 		}  catch (SQLException ex) {
