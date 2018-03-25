@@ -41,6 +41,6 @@
 
     <welcome-file-list>
         <!-- Page sur laquelle s'ouvre l'application -->
-        <welcome-file>LoginController</welcome-file>
+        <welcome-file>Controller.LoginController</welcome-file>
     </welcome-file-list>
 </web-app>

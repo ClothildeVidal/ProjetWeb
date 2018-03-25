@@ -16,7 +16,7 @@ public class ExtendedDAO extends DAO {
 
     public List<String> commandesExistantes() throws DAOException {
         List<String> result = new LinkedList<>();
-        String sql = "SELECT PRODUCT_ID FROM PURCHASE_ORDER WHERECUSTOMER_ID=?";
+        String sql = "SELECT PRODUCT_ID FROM PURCHASE_ORDER WHERE CUSTOMER_ID=?";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
