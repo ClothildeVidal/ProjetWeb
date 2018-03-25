@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.sql.Connection;
@@ -19,21 +14,10 @@ public class DAO {
 
     public final DataSource myDataSource;
 
-    /**
-     * Construit le AO avec sa source de données
-     *
-     * @param dataSource la source de données à utiliser
-     */
     public DAO(DataSource dataSource) {
         this.myDataSource = dataSource;
     }
 
-    /**
-     * Contenu de la table DISCOUNT_CODE
-     *
-     * @return Liste des discount codes
-     * @throws SQLException renvoyées par JDBC
-     */
     public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
         CustomerEntity result = null;
 

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : affiche
-    Created on : 22 mars 2018, 17:32:21
-    Author     : anaii
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

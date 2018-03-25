@@ -3,18 +3,19 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Please login</title>
-	</head>
-	<body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Please login</title>
+    </head>
+    <body>
 
-            <h1>Bienvenue dans notre application</h1>
+        <h1>Bienvenue dans notre application</h1>
 
-		<form action="<c:url value="/" />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
-			identifiant (untel) : <input name='loginParam'><br>
-			motde passe (ABCD): <input name='passwordParam' type='password'><br>
-			<input type='submit' name='action' value='Connexion'>
-		</form>
-	</body>
+        <form action="<c:url value="/" />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
+            <!-- Définis dans web.xml -->
+            identifiant (untel) : <input name='loginParam'><br>
+            motde passe (ABCD): <input name='passwordParam' type='password'><br>
+            <input type='submit' name='action' value='Connexion'>
+        </form>
+    </body>
 </html>
