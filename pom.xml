@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mycompany</groupId>
-    <artifactId>ProjetWeb</artifactId>
+    <artifactId>projet</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>ProjetWeb</name>
+    <name>projet</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -21,31 +21,23 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- For deployment to tomcat, which does not provide the JSTL -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>		
-        <!-- Derby embedded database and JDBC Driver -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.14.1.0</version>
         </dependency>
-        <!-- Derby network client JDBC driver -->
+         
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
             <version>10.14.1.0</version>
         </dependency>
-        <!-- Derby tols (for initializing database from SQL script) -->
+        
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbytools</artifactId>
             <version>10.14.1.0</version>
-        </dependency>	
+        </dependency>
     </dependencies>
 
     <build>
@@ -90,24 +82,10 @@
                                     <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
-                                <!-- for Heroku, see: https://devcenter.heroku.com/articles/java-webapp-runner -->
-                                <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>8.5.23.0</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>								
                             </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0-M1</version>
-                <configuration>
-                </configuration>
             </plugin>
         </plugins>
     </build>

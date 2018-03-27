@@ -49,34 +49,37 @@ public class DAO {
 	 * @return 1 si succès, 0 sinon
 	 * @throws SQLException renvoyées par JDBC
 	 */
-	public int addCustomer(int id, String email) throws SQLException {
-		int result = 0;
-		String sql = "INSERT INTO CUSTOMER VALUES (?, ?)";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setInt(1, id);
-			stmt.setString(2, email);
-			result = stmt.executeUpdate();
-		}
-		return result;
-	}
+//	public int addCustomer(int id, String email) throws SQLException {
+//		int result = 0;
+//		String sql = "INSERT INTO CUSTOMER VALUES (?, ?)";
+//		try (Connection connection = myDataSource.getConnection(); 
+//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+//			stmt.setInt(1, id);
+//			stmt.setString(2, email);
+//			result = stmt.executeUpdate();
+//		}
+//		return result;
+//	}
         
         /**
 	 * Supprime un enregistrement dans la table CUSTOMER
+     * @param customerID
+     * @param emailCustomer
 	 * @param code la clé de l'enregistrement à supprimer
 	 * @return le nombre d'enregistrements supprimés (1 ou 0)
+     * @throws Model.DAOException
 	 * @throws java.sql.SQLException renvoyées par JDBC
 	 **/
-	public int deleteCustomer(int id) throws SQLException {
-		int result = 0;
-		String sql = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
-		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setInt(1, id);
-			result = stmt.executeUpdate();
-		}
-		return result;
-	}
+//	public int deleteCustomer(int id) throws SQLException {
+//		int result = 0;
+//		String sql = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
+//		try (Connection connection = myDataSource.getConnection(); 
+//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+//			stmt.setInt(1, id);
+//			result = stmt.executeUpdate();
+//		}
+//		return result;
+//	}
 
     public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
         CustomerEntity result = null;
