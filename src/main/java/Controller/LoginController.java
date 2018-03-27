@@ -14,7 +14,7 @@ public class LoginController extends HttpServlet {
         String action = request.getParameter("action");
         if (null != action) {
             switch (action) {
-                case "login":
+                case "Connexion":
                     checkLogin(request);
                     break;
                 case "logout":
@@ -63,13 +63,11 @@ public class LoginController extends HttpServlet {
         // Les paramètres transmis dans la requête
         String loginParam = request.getParameter("loginParam");
         String passwordParam = request.getParameter("passwordParam");
-
-        // Les login/password définis dans web.xml
-        String login = getInitParameter("login");
-        String password = getInitParameter("password");
         String userName = getInitParameter("userName");
 
-        if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
+        // Les login/password définis dans web.xml
+
+        if ("untel".equals(loginParam) && "ABCD".equals(passwordParam)) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
