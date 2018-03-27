@@ -7,7 +7,7 @@
     <session-config>
         <session-timeout>
             <!-- Temps pendant lequel une connexion reste active si l'utilisateur est inactif -->
-            30
+            300
         </session-timeout>
     </session-config>
     <servlet>
