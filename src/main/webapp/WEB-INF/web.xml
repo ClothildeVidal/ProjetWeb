@@ -33,14 +33,8 @@
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
 
-    <filter-mapping>
-        <filter-name>ProtectedPagesFilter</filter-name>
-        <url-pattern>/protected/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
-
     <welcome-file-list>
         <!-- Page sur laquelle s'ouvre l'application -->
-        <welcome-file>Controller.LoginController</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
