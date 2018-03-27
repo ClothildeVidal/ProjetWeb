@@ -11,10 +11,7 @@
 
         <h1>Bienvenue dans notre application</h1>
 
-        <form action="<c:url value="affiche.jsp" />" method="POST"> 
-            identifiant (untel) : <input name='loginParam'><br>
-            mot de passe (ABCD): <input name='passwordParam' type='password'><br>
-            <input type='submit' name='action' value='Connexion'>
-        </form>
+        <p><a href="loginClient.jsp" >Etes-vous un client?</a></p>
+        <p><a href="loginAdmin.jsp" >Etes-vous un admin?</a></p>
     </body>
 </html>
