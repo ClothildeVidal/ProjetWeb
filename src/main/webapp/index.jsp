@@ -14,7 +14,7 @@
         <form action="<c:url value="/" />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
             <!-- Définis dans web.xml -->
             identifiant (untel) : <input name='loginParam'><br>
-            motde passe (ABCD): <input name='passwordParam' type='password'><br>
+            mot de passe (ABCD): <input name='passwordParam' type='password'><br>
             <input type='submit' name='action' value='Connexion'>
         </form>
     </body>
