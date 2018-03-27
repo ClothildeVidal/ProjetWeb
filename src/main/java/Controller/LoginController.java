@@ -63,11 +63,13 @@ public class LoginController extends HttpServlet {
         // Les paramètres transmis dans la requête
         String loginParam = request.getParameter("loginParam");
         String passwordParam = request.getParameter("passwordParam");
+
+        // Le login/password défini dans web.xml
+        String login = getInitParameter("login");
+        String password = getInitParameter("password");
         String userName = getInitParameter("userName");
 
-        // Les login/password définis dans web.xml
-
-        if ("untel".equals(loginParam) && "ABCD".equals(passwordParam)) {
+        if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
