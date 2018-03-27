@@ -15,11 +15,11 @@
         <servlet-class>controller.LoginController</servlet-class>
         <!-- Les identifiants pour se connecter -->
         <init-param>
-            <param-name>loginParam</param-name>
+            <param-name>login</param-name>
             <param-value>untel</param-value>
         </init-param>
         <init-param>
-            <param-name>passwordParam</param-name>
+            <param-name>password</param-name>
             <param-value>ABCD</param-value>
         </init-param>
         <init-param>
