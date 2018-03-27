@@ -36,7 +36,7 @@
     <!-- Un filtre qui vérifie que l'utilisateur est connecté -->
     <filter>
         <filter-name>ProtectedPagesFilter</filter-name>
-        <filter-class>filters.ProtectedPagesFilter</filter-class>
+        <filter-class>Filters.ProtectedPagesFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ProtectedPagesFilter</filter-name>
@@ -47,7 +47,7 @@
     <!-- Un listener qui compte le nombre d'utilisateurs connectés à l'application -->
     <listener>
         <description>Counting connected users</description>
-        <listener-class>listeners.CountingUsers</listener-class>
+        <listener-class>Listeners.CountingUsers</listener-class>
     </listener>
 
     <welcome-file-list>
