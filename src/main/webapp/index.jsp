@@ -5,13 +5,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Please login</title>
-    </head>
+        <title>Bienvenue</title>
+        <link rel="stylesheet" href="css/accueil.css" type="text/css" media="screen" />
     <body>
-
-        <h1>Bienvenue dans notre application</h1>
-
-        <p><a href="loginClient.jsp" >Etes-vous un client?</a></p>
-        <p><a href="loginAdmin.jsp" >Etes-vous un admin?</a></p>
+        <section id="accueil">
+            <section id="client">
+                <p><a href="loginClient.jsp" >Client</a></p>
+            </section>
+            <section id="administrateur">
+                <p><a href="loginAdmin.jsp" >Administrateur</a></p>
+            </section>
+        </section>
     </body>
 </html>
