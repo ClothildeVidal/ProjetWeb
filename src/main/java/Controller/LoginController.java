@@ -86,9 +86,6 @@ public class LoginController extends HttpServlet {
             passwordC = stmt.executeQuery("SELECT CUSTOMER_ID FROM CUSTOMER");
         } catch (SQLException ex) {
         }
-        for(int i=0; i<13;i++){
-            
-        }
         if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
