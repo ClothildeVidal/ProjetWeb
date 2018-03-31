@@ -65,42 +65,50 @@ public class DAO {
 //		return result;
 //	}
     /**
-     * Supprime un enregistrement dans la table CUSTOMER
+     * Detruire un enregistrement dans la table CUSTOMER
      *
-     * @param customerID
-     * @param emailCustomer
-     * @param code la clé de l'enregistrement à supprimer
-     * @return le nombre d'enregistrements supprimés (1 ou 0)
-     * @throws Model.DAOException
-     * @throws java.sql.SQLException renvoyées par JDBC
-	 *
+     * @param customerId la clé du client à détruire
+     * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
+     * @throws DAOException
      */
-//	public int deleteCustomer(int id) throws SQLException {
-//		int result = 0;
-//		String sql = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
-//		try (Connection connection = myDataSource.getConnection(); 
-//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-//			stmt.setInt(1, id);
-//			result = stmt.executeUpdate();
-//		}
-//		return result;
-//	}
-    public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
+    public int deleteCustomer(int customerId) throws DAOException {
+
+        // Une requête SQL paramétrée
+        String sql = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            // Définir la valeur du paramètre
+            stmt.setInt(1, customerId);
+
+            return stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
+        }
+    }
+
+    /**
+     * Trouver un Customer à partir de sa clé
+     *
+     * @param customerID la clé du CUSTOMER à rechercher
+     * @return l'enregistrement correspondant dans la table CUSTOMER, ou null si
+     * pas trouvé
+     * @throws DAOException
+     */
+    public CustomerEntity findCustomer(int customerID) throws DAOException {
         CustomerEntity result = null;
 
-        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ? AND CUSTOMER_EMAIL = ?";
+        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ?";
         try (Connection connection = myDataSource.getConnection(); // On crée un statement pour exécuter une requête
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setInt(1, customerID);
-            stmt.setString(2, emailCustomer);
-
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) { // On a trouvé
-                    String name = rs.getString("NAME");
-                    String adresse = rs.getString("ADRESSE");
+                    String email = rs.getString("EMAIL");
                     // On crée l'objet "entity"
-                    result = new CustomerEntity(customerID, emailCustomer);
+                    result = new CustomerEntity(customerID, email);
                 } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {
@@ -144,22 +152,22 @@ public class DAO {
         }
         return result;
     }
-    
+
     public Map<String, Double> CaParClient() throws SQLException {
-		Map<String, Double> result = new HashMap<>();
-		String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY COSTUMER_ID";
-		try (Connection connection = myDataSource.getConnection(); 
-		     Statement stmt = connection.createStatement(); 
-		     ResultSet rs = stmt.executeQuery(sql)) {
-			while (rs.next()) {
-				// On récupère les champs nécessaires de l'enregistrement courant
-				String name = rs.getString("NAME");
-				double sales = rs.getDouble("SALES");
-				// On l'ajoute à la liste des résultats
-				result.put(name, sales);
-			}
-		}
-		return result;
-	}
+        Map<String, Double> result = new HashMap<>();
+        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY COSTUMER_ID";
+        try (Connection connection = myDataSource.getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                // On récupère les champs nécessaires de l'enregistrement courant
+                String name = rs.getString("NAME");
+                double sales = rs.getDouble("SALES");
+                // On l'ajoute à la liste des résultats
+                result.put(name, sales);
+            }
+        }
+        return result;
+    }
 
 }
