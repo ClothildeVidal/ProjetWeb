@@ -5,30 +5,26 @@
  */
 package Servlet;
 
+import Model.DAO;
+import Model.DataSourceFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.*;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Properties;
-
-import Model.DAO;
-import Model.DataSourceFactory;
 
 /**
  *
  * @author anaii
  */
-@WebServlet(name = "CaParProduit", urlPatterns = {"/CaParProduit"})
-public class CaParProduit extends HttpServlet {
+public class CaParClient extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +40,7 @@ public class CaParProduit extends HttpServlet {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         // Properties est une Map<clé, valeur> pratique pour générer du JSON
         Properties resultat = new Properties();
-        resultat.put("records", dao.CaParProduit());
+        resultat.put("records", dao.CaParClient());
 
         try (PrintWriter out = response.getWriter()) {
             // On spécifie que la servlet va générer du JSON

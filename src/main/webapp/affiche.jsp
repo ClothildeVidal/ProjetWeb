@@ -13,29 +13,83 @@
         <title>You are connected</title>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-            google.charts.load('current', {'packages': ['corechart']});
 
-            // Set a callback to run when the Google Visualization API is loaded.
-            google.charts.setOnLoadCallback(drawChart);
+            google.load("visualization", "1", {packages: ["corechart"]});
+            google.setOnLoadCallback(doAjax);
+            google.setOnLoadCallback(doAjax2);
+            google.setOnLoadCallback(doAjax3);
 
-            function drawChart() {
+            function drawChart(dataArray) {
 
-                // Create the data table.
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Produit');
-                data.addColumn('number', 'CA');
-                data.addRows([       
-                    ['Produit1', 1],
-                    ['Produit2', 6],
-                    ['Produit3', 3]
-                ]);
-                // Set chart options
+                var data = google.visualization.arrayToDataTable(dataArray);
                 var options = {'title': 'Chiffre d affaires',
                     'width': 400,
                     'height': 300};
-                // Instantiate and draw our chart, passing in some options.
+
                 var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
+            }
+            function doAjax() {
+                $.ajax({
+                    url: "CaParProduit",
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Produit", "Ventes"]);
+                                for (var produit in result.records) {
+                                    chartData.push([produit, result.records[produit]]);
+                                }
+                                // On dessine le graphique
+                                drawChart(chartData);
+                            },
+                    error: showError
+                });
+            }
+            function doAjax2() {
+                $.ajax({
+                    url: "CaParZone",
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Zone", "Ventes"]);
+                                for (var produit in result.records) {
+                                    chartData.push([zone, result.records[zone]]);
+                                }
+                                // On dessine le graphique
+                                drawChart(chartData);
+                            },
+                    error: showError
+                });
+            }
+
+            // Fonction qui traite les erreurs de la requête
+            function showError(xhr, status, message) {
+                alert("Erreur: " + status + " : " + message);
+            }
+            function doAjax3() {
+                $.ajax({
+                    url: "CaParClient",
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Client", "Ventes"]);
+                                for (var client in result.records) {
+                                    chartData.push([client, result.records[client]]);
+                                }
+                                // On dessine le graphique
+                                drawChart(chartData);
+                            },
+                    error: showError
+                });
             }
         </script>
     </head>
@@ -50,6 +104,7 @@
         <hr/>
         <h3>Il y a actuellement ${applicationScope.numberConnected} utilisateurs connectés</h3>
         <div id="chart_div"></div>
+
     </body>
 </html>
 

@@ -44,14 +44,15 @@ public class DAO {
         }
         return result;
     }
-    
+
     /**
-	 * Ajout d'un enregistrement dans la table CUSTOMER
-	 * @param code le code (non null)
-	 * @param rate le taux (positive or 0)
-	 * @return 1 si succès, 0 sinon
-	 * @throws SQLException renvoyées par JDBC
-	 */
+     * Ajout d'un enregistrement dans la table CUSTOMER
+     *
+     * @param code le code (non null)
+     * @param rate le taux (positive or 0)
+     * @return 1 si succès, 0 sinon
+     * @throws SQLException renvoyées par JDBC
+     */
 //	public int addCustomer(int id, String email) throws SQLException {
 //		int result = 0;
 //		String sql = "INSERT INTO CUSTOMER VALUES (?, ?)";
@@ -63,16 +64,17 @@ public class DAO {
 //		}
 //		return result;
 //	}
-        
-        /**
-	 * Supprime un enregistrement dans la table CUSTOMER
+    /**
+     * Supprime un enregistrement dans la table CUSTOMER
+     *
      * @param customerID
      * @param emailCustomer
-	 * @param code la clé de l'enregistrement à supprimer
-	 * @return le nombre d'enregistrements supprimés (1 ou 0)
+     * @param code la clé de l'enregistrement à supprimer
+     * @return le nombre d'enregistrements supprimés (1 ou 0)
      * @throws Model.DAOException
-	 * @throws java.sql.SQLException renvoyées par JDBC
-	 **/
+     * @throws java.sql.SQLException renvoyées par JDBC
+	 *
+     */
 //	public int deleteCustomer(int id) throws SQLException {
 //		int result = 0;
 //		String sql = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
@@ -83,7 +85,6 @@ public class DAO {
 //		}
 //		return result;
 //	}
-
     public CustomerEntity findCustomer(int customerID, String emailCustomer) throws DAOException {
         CustomerEntity result = null;
 
@@ -109,10 +110,44 @@ public class DAO {
 
         return result;
     }
-    
+
     public Map<String, Double> CaParProduit() throws SQLException {
+        Map<String, Double> result = new HashMap<>();
+        String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.PRODUCT c INNER JOIN APP.PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
+        try (Connection connection = myDataSource.getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                // On récupère les champs nécessaires de l'enregistrement courant
+                String produit = rs.getString("PRODUCT_CODE");
+                double sales = rs.getDouble("SALES");
+                // On l'ajoute à la liste des résultats
+                result.put(produit, sales);
+            }
+        }
+        return result;
+    }
+
+    public Map<String, Double> CaParZone() throws SQLException {
+        Map<String, Double> result = new HashMap<>();
+        String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.COSTUMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY STATE";
+        try (Connection connection = myDataSource.getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                // On récupère les champs nécessaires de l'enregistrement courant
+                String zone = rs.getString("STATE");
+                double sales = rs.getDouble("SALES");
+                // On l'ajoute à la liste des résultats
+                result.put(zone, sales);
+            }
+        }
+        return result;
+    }
+    
+    public Map<String, Double> CaParClient() throws SQLException {
 		Map<String, Double> result = new HashMap<>();
-		String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
+		String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY COSTUMER_ID";
 		try (Connection connection = myDataSource.getConnection(); 
 		     Statement stmt = connection.createStatement(); 
 		     ResultSet rs = stmt.executeQuery(sql)) {
