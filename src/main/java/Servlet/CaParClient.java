@@ -1,6 +1,7 @@
 package Servlet;
 
 import Model.DAO;
+import Model.DAOException;
 import Model.DataSourceFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CaParClient extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, DAOException {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         // Properties est une Map<clé, valeur> pratique pour générer du JSON
         Properties resultat = new Properties();
@@ -43,6 +44,8 @@ public class CaParClient extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CaParProduit.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOException ex) {
+            Logger.getLogger(CaParClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -53,6 +56,8 @@ public class CaParClient extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CaParProduit.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOException ex) {
+            Logger.getLogger(CaParClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

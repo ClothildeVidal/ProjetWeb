@@ -119,7 +119,7 @@ public class DAO {
         return result;
     }
 
-    public Map<String, Double> CaParProduit() throws SQLException {
+    public Map<String, Double> CaParProduit() throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.PRODUCT c INNER JOIN APP.PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
         try (Connection connection = myDataSource.getConnection();
@@ -132,11 +132,14 @@ public class DAO {
                 // On l'ajoute à la liste des résultats
                 result.put(produit, sales);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
         }
         return result;
     }
 
-    public Map<String, Double> CaParZone() throws SQLException {
+    public Map<String, Double> CaParZone() throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.COSTUMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY STATE";
         try (Connection connection = myDataSource.getConnection();
@@ -149,11 +152,14 @@ public class DAO {
                 // On l'ajoute à la liste des résultats
                 result.put(zone, sales);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
         }
         return result;
     }
 
-    public Map<String, Double> CaParClient() throws SQLException {
+    public Map<String, Double> CaParClient() throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY COSTUMER_ID";
         try (Connection connection = myDataSource.getConnection();
@@ -166,6 +172,9 @@ public class DAO {
                 // On l'ajoute à la liste des résultats
                 result.put(name, sales);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
         }
         return result;
     }

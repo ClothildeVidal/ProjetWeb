@@ -14,13 +14,14 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Properties;
 import Model.DAO;
+import Model.DAOException;
 import Model.DataSourceFactory;
 
 @WebServlet(name = "CaParProduit", urlPatterns = {"/CaParProduit"})
 public class CaParProduit extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, DAOException {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         // Properties est une Map<clé, valeur> pratique pour générer du JSON
         Properties resultat = new Properties();
@@ -45,6 +46,8 @@ public class CaParProduit extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(CaParProduit.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOException ex) {
+            Logger.getLogger(CaParProduit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -54,6 +57,8 @@ public class CaParProduit extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(CaParProduit.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DAOException ex) {
             Logger.getLogger(CaParProduit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
