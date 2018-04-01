@@ -82,8 +82,8 @@ public class LoginController extends HttpServlet {
         try {
             connection = getConnectionWithDriverManager();
             stmt = connection.createStatement();
-            loginC = stmt.executeQuery("SELECT EMAIL FROM CUSTOMER");
-            passwordC = stmt.executeQuery("SELECT CUSTOMER_ID FROM CUSTOMER");
+            loginC = stmt.executeQuery("SELECT EMAIL FROM CUSTOMER WHERE EMAIL=loginParamC;");
+            passwordC = stmt.executeQuery("SELECT CUSTOMER_ID FROM CUSTOMER WHERE CUSTOMER_ID=passwordParamC");
         } catch (SQLException ex) {
         }
         if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
@@ -91,7 +91,7 @@ public class LoginController extends HttpServlet {
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
             session.setAttribute("userName", userName);
-        } else if ((loginC.equals(loginParam)) && (passwordC.equals(passwordParam))) {
+        } else if ((loginC == null) && (passwordC == null)) {
             HttpSession session = request.getSession(true); // démarre la session
             session.setAttribute("userName", userName);
         } else { // On positionne un message d'erreur pour l'afficher dans la JSP
