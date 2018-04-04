@@ -34,13 +34,19 @@ public class LoginController extends HttpServlet {
         }
 
         String userName = findUserInSession(request);
+        
         String jspView;
         if (null == userName) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
             jspView = "index.jsp";
 
         } else {
-            jspView = "affiche.jsp";
+            if (getServletContext().getRealPath("/") == "loginAdmin.jsp") {
+                jspView = "affiche.jsp";
+            }
+            else {
+            jspView = "client.jsp";
+            }
 
         }
         // On va vers la page choisie
