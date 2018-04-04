@@ -14,8 +14,8 @@
 <!--        <div style="color:red">${errorMessage}</div> -->
         <div id="form">
             <form action="<c:url value="/" />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
-                Identifiant : <input name='loginParamC'><br>
-                Mot de passe : <input name='passwordParamC' type='password'><br>
+                Identifiant ( jumboeagle@example.com ): <input name='loginParamC'><br>
+                Mot de passe ( 1 ) : <input name='passwordParamC' type='password'><br>
                 <input type='submit' name='action' value='Connexion'>
             </form>
         </div>
