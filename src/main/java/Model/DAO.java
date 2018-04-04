@@ -27,6 +27,8 @@ public class DAO {
      * @return Liste des customers
      * @throws SQLException renvoyées par JDBC
      */
+    
+    
     public List<CustomerEntity> allCodes() throws SQLException {
 
         List<CustomerEntity> result = new LinkedList<>();
