@@ -1,6 +1,6 @@
 package Model;
 
-class CustomerEntity {
+public class CustomerEntity {
 
     private String email;
 

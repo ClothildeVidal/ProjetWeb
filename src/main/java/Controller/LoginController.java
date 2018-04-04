@@ -1,5 +1,8 @@
 package Controller;
 
+import Model.DAO;
+import Model.DAOException;
+import Model.DataSourceFactory;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -66,6 +69,17 @@ public class LoginController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private boolean connexion(HttpServletRequest request) throws DAOException {
+        boolean result = false;
+        String loginParamC = request.getParameter("loginParamC");
+        String passwordParamC = request.getParameter("passwordParamC");
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
+        Model.CustomerEntity client = dao.findCustomer(loginParamC, passwordParamC);
+        /*   Logger.getLogger("DiscountEditor").log(Level.INFO, "Database already exists");*/
+        result = true;
+        return result;
+    }
+
     private void checkLogin(HttpServletRequest request) {
         // Les paramètres transmis dans la requête
         String loginParam = request.getParameter("loginParam");
@@ -78,13 +92,9 @@ public class LoginController extends HttpServlet {
         String userName = getInitParameter("userName");
         Connection connection = null;
         Statement stmt = null;
-        ResultSet loginC = null;
-        ResultSet passwordC = null;
         try {
             connection = getConnectionWithDriverManager();
             stmt = connection.createStatement();
-            loginC = stmt.executeQuery("SELECT EMAIL FROM CUSTOMER WHERE EMAIL="+loginParamC+";");
-            passwordC = stmt.executeQuery("SELECT CUSTOMER_ID FROM CUSTOMER WHERE CUSTOMER_ID="+passwordParamC+";");
         } catch (SQLException ex) {
         }
         if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
@@ -92,11 +102,15 @@ public class LoginController extends HttpServlet {
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
             session.setAttribute("userName", userName);
-        } else if ((loginC != null) && (passwordC != null)) {
-            HttpSession session = request.getSession(true); // démarre la session
-            session.setAttribute("userName", userName);
-        } else { // On positionne un message d'erreur pour l'afficher dans la JSP
-            request.setAttribute("errorMessage", "Login/Password incorrect");
+        } else try {
+            if (connexion(request)) {
+                HttpSession session = request.getSession(true); // démarre la session
+                session.setAttribute("userName", userName);
+            } else { // On positionne un message d'erreur pour l'afficher dans la JSP
+                request.setAttribute("errorMessage", "Login/Password incorrect");
+            }
+        } catch (DAOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

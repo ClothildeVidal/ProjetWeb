@@ -127,6 +127,32 @@ public class DAO {
         return result;
     }
 
+        public CustomerEntity findCustomer(String email, String customerID) throws DAOException {
+        CustomerEntity result = null;
+
+        String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
+        try (Connection connection = myDataSource.getConnection(); // On crée un statement pour exécuter une requête
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(2, customerID);
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // On a trouvé
+                    // On crée l'objet "entity"
+                    email = rs.getString("EMAIL");
+                    customerID = rs.getString("CUSTOMER_ID");
+                    result = new CustomerEntity(Integer.parseInt(customerID), email);
+                } // else on n'a pas trouvé, on renverra null
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
+        }
+
+        return result;
+    }
+        
+        
     public Map<String, Double> CaParProduit() throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
