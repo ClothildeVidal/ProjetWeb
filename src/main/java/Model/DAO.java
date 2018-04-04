@@ -129,7 +129,7 @@ public class DAO {
 
     public Map<String, Double> CaParProduit() throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.PRODUCT c INNER JOIN APP.PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
+        String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
