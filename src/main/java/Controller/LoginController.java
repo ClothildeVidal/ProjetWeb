@@ -19,14 +19,20 @@ import javax.servlet.http.HttpSession;
 
 public class LoginController extends HttpServlet {
 
+    private boolean isClient = false;
+    private boolean isAdmin = false;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Quelle action a appelé cette servlet ?
         String action = request.getParameter("action");
         if (null != action) {
             switch (action) {
-                case "Connexion":
-                    checkLogin(request);
+                case "ConnexionAdministrateur":
+                    checkLoginAdmin(request);
                     break;
+               /* case "ConnexionClient":
+                    checkLoginClient(request);
+                    break;*/
                 case "logout":
                     doLogout(request);
                     break;
@@ -34,18 +40,17 @@ public class LoginController extends HttpServlet {
         }
 
         String userName = findUserInSession(request);
-        
         String jspView;
-        if (null == userName) { // L'utilisateur n'est pas connecté
+        
+        if (isClient == false && isAdmin == false) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
             jspView = "index.jsp";
 
         } else {
-            if (getServletContext().getRealPath("/") == "loginAdmin.jsp") {
-                jspView = "affiche.jsp";
-            }
-            else {
-            jspView = "client.jsp";
+            if (isAdmin) {
+                jspView = "admin.jsp";
+            } else {
+                jspView = "client.jsp";
             }
 
         }
@@ -86,16 +91,57 @@ public class LoginController extends HttpServlet {
         return result;
     }
 
-    private void checkLogin(HttpServletRequest request) {
+    /*private void checkLoginClient(HttpServletRequest request) {
+        // Les paramètres transmis dans la requête
+        String loginParamC = request.getParameter("loginParamC");
+        String passwordParamC = request.getParameter("passwordParamC");
+        // Fonction du DAO
+        Model.CustomerEntity client;
+        try {
+            client = Model.DAO.findCustomer(loginParamC, passwordParamC);
+        } catch (DAOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String login = client.getEmail();
+        String password = Integer.toString(client.getCustomerId());
+        String userName = getInitParameter("userName");
+
+        Connection connection = null;
+        Statement stmt = null;
+        try {
+            connection = getConnectionWithDriverManager();
+            stmt = connection.createStatement();
+        } catch (SQLException ex) {
+        }
+        if ((login.equals(loginParamC) && (password.equals(passwordParamC)))) {
+            // On a trouvé la combinaison login / password
+            // On stocke l'information dans la session
+            HttpSession session = request.getSession(true); // démarre la session
+            session.setAttribute("userName", userName);
+            session.setAttribute("true", isClient);
+        } else {
+            try {
+                if (connexion(request)) {
+                    HttpSession session = request.getSession(true); // démarre la session
+                    session.setAttribute("userName", userName);
+                } else { // On positionne un message d'erreur pour l'afficher dans la JSP
+                    request.setAttribute("errorMessage", "Login/Password incorrect");
+                }
+            } catch (DAOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }*/
+
+    private void checkLoginAdmin(HttpServletRequest request) {
         // Les paramètres transmis dans la requête
         String loginParam = request.getParameter("loginParam");
         String passwordParam = request.getParameter("passwordParam");
-        String loginParamC = request.getParameter("loginParamC");
-        String passwordParamC = request.getParameter("passwordParamC");
         // Le login/password défini dans web.xml
         String login = getInitParameter("login");
         String password = getInitParameter("password");
         String userName = getInitParameter("userName");
+
         Connection connection = null;
         Statement stmt = null;
         try {
@@ -108,15 +154,19 @@ public class LoginController extends HttpServlet {
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
             session.setAttribute("userName", userName);
-        } else try {
-            if (connexion(request)) {
-                HttpSession session = request.getSession(true); // démarre la session
-                session.setAttribute("userName", userName);
-            } else { // On positionne un message d'erreur pour l'afficher dans la JSP
-                request.setAttribute("errorMessage", "Login/Password incorrect");
+            session.setAttribute("true", isAdmin);
+        } else {
+            try {
+                if (connexion(request)) {
+                    HttpSession session = request.getSession(true); // démarre la session
+                    session.setAttribute("userName", userName);
+                    session.setAttribute("true", isAdmin);
+                } else { // On positionne un message d'erreur pour l'afficher dans la JSP
+                    request.setAttribute("errorMessage", "Login/Password incorrect");
+                }
+            } catch (DAOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (DAOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

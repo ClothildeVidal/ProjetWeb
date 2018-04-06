@@ -20,20 +20,6 @@ public class DAO {
     public DAO(DataSource dataSource) {
         this.myDataSource = dataSource;
     }
-
-    /**
-     * Contenu de la table CUSTOMER
-     *
-     * @return Liste des customers
-     * @throws SQLException renvoyées par JDBC
-     */
-    
-    
-    
-    
-    
-    
-    
     
     public List<CustomerEntity> allCodes() throws SQLException {
 
