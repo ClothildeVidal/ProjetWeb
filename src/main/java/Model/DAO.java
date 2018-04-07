@@ -113,15 +113,15 @@ public class DAO {
         return result;
     }
 
-        public CustomerEntity findCustomer(String email, String customerID) throws DAOException {
+        public CustomerEntity findClient(String email, String customerID) throws DAOException {
         CustomerEntity result = null;
 
         String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
         try (Connection connection = myDataSource.getConnection(); // On crée un statement pour exécuter une requête
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setString(2, customerID);
             stmt.setString(1, email);
+            stmt.setString(2, customerID);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) { // On a trouvé
                     // On crée l'objet "entity"

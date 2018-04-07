@@ -22,26 +22,31 @@ public class LoginController extends HttpServlet {
     private boolean isClient = false;
     private boolean isAdmin = false;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DAOException {
         // Quelle action a appelé cette servlet ?
         String action = request.getParameter("action");
         if (null != action) {
             switch (action) {
-                case "ConnexionAdministrateur":
-                    checkLoginAdmin(request);
-                    break;
-               /* case "ConnexionClient":
-                    checkLoginClient(request);
-                    break;*/
+                case "Connexion":
+                    if (checkLoginAdmin(request)) {
+                        isAdmin = true;
+                        break;
+                    }
+                    if (checkLoginClient(request)) {
+                        isClient = true;
+                        break;
+                    }
                 case "logout":
                     doLogout(request);
+                    isAdmin = false;
+                    isClient = false;
                     break;
             }
         }
 
         String userName = findUserInSession(request);
         String jspView;
-        
+
         if (isClient == false && isAdmin == false) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
             jspView = "index.jsp";
@@ -55,20 +60,34 @@ public class LoginController extends HttpServlet {
 
         }
         // On va vers la page choisie
-        request.getRequestDispatcher(jspView).forward(request, response);
+
+        request.getRequestDispatcher(jspView)
+                .forward(request, response);
 
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+
+        } catch (DAOException ex) {
+            Logger.getLogger(LoginController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+
+        } catch (DAOException ex) {
+            Logger.getLogger(LoginController.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /*
@@ -80,14 +99,28 @@ public class LoginController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private boolean connexion(HttpServletRequest request) throws DAOException {
+    private boolean checkLoginClient(HttpServletRequest request) throws DAOException {
         boolean result = false;
         String loginParamC = request.getParameter("loginParamC");
         String passwordParamC = request.getParameter("passwordParamC");
+    /*    Connection connection = null;
+        Statement stmt = null;
+        try {
+            connection = getConnectionWithDriverManager();
+            stmt = connection.createStatement();
+        } catch (SQLException ex) {
+        }*/
         DAO dao = new DAO(DataSourceFactory.getDataSource());
-        Model.CustomerEntity client = dao.findCustomer(loginParamC, passwordParamC);
+        Model.CustomerEntity client = dao.findClient(loginParamC, passwordParamC);
+        if (client != null) {
+            //  if (Integer.toString(client.getCustomerId()).equals(passwordParamC) && client.getEmail().equals(passwordParamC)) {
+            HttpSession session = request.getSession(true); // démarre la session
+            session.setAttribute("userName", loginParamC);
+            result = true;
+        } else {
+            request.setAttribute("errorMessage", "Login/Password incorrect");
+        }
         /*   Logger.getLogger("DiscountEditor").log(Level.INFO, "Database already exists");*/
-        result = true;
         return result;
     }
 
@@ -132,8 +165,8 @@ public class LoginController extends HttpServlet {
             }
         }
     }*/
-
-    private void checkLoginAdmin(HttpServletRequest request) {
+    private boolean checkLoginAdmin(HttpServletRequest request) {
+        boolean result = false;
         // Les paramètres transmis dans la requête
         String loginParam = request.getParameter("loginParam");
         String passwordParam = request.getParameter("passwordParam");
@@ -142,32 +175,27 @@ public class LoginController extends HttpServlet {
         String password = getInitParameter("password");
         String userName = getInitParameter("userName");
 
-        Connection connection = null;
-        Statement stmt = null;
-        try {
-            connection = getConnectionWithDriverManager();
-            stmt = connection.createStatement();
-        } catch (SQLException ex) {
-        }
         if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
             // On a trouvé la combinaison login / password
             // On stocke l'information dans la session
             HttpSession session = request.getSession(true); // démarre la session
             session.setAttribute("userName", userName);
-            session.setAttribute("true", isAdmin);
+            // session.setAttribute("true", isAdmin);
+            result = true;
         } else {
-            try {
-                if (connexion(request)) {
+            /*  try {
+                if (checkLoginClient(request)) {
                     HttpSession session = request.getSession(true); // démarre la session
                     session.setAttribute("userName", userName);
-                    session.setAttribute("true", isAdmin);
-                } else { // On positionne un message d'erreur pour l'afficher dans la JSP
-                    request.setAttribute("errorMessage", "Login/Password incorrect");
-                }
-            } catch (DAOException ex) {
+                    session.setAttribute("true", isClient);
+                } else { // On positionne un message d'erreur pour l'afficher dans la JSP */
+            request.setAttribute("errorMessage", "Login/Password incorrect");
+        }
+        /*   } catch (DAOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } */
+        return result;
     }
 
     private void doLogout(HttpServletRequest request) {

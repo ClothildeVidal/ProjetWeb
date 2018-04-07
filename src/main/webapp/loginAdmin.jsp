@@ -16,7 +16,7 @@
             <form action= "<c:url value='/' />" method="POST"> 
                 Identifiant : <input name='loginParam'><br>
                 Mot de passe : <input name='passwordParam' type='password'><br>
-                <input type='submit' name='action' value='ConnexionAdministrateur'>
+                <input type='submit' name='action' value='Connexion'>
             </form>
         </div>
         <p id="Retour"><a href="index.jsp">Retour</a></p>

@@ -16,7 +16,7 @@
             <form action="<c:url value="/" />" method="POST"> <!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
                 Identifiant ( jumboeagle@example.com ): <input name='loginParamC'><br>
                 Mot de passe ( 1 ) : <input name='passwordParamC' type='password'><br>
-                <input type='submit' name='action' value='ConnexionClient'>
+                <input type='submit' name='action' value='Connexion'>
             </form>
         </div>
         <p id="Retour"><a href="index.jsp">Retour</a></p>
