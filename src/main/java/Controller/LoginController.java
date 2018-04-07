@@ -50,20 +50,15 @@ public class LoginController extends HttpServlet {
         if (isClient == false && isAdmin == false) { // L'utilisateur n'est pas connecté
             // On choisit la page de login
             jspView = "index.jsp";
-
         } else {
             if (isAdmin) {
                 jspView = "admin.jsp";
             } else {
                 jspView = "client.jsp";
             }
-
         }
         // On va vers la page choisie
-
-        request.getRequestDispatcher(jspView)
-                .forward(request, response);
-
+        request.getRequestDispatcher(jspView).forward(request, response);
     }
 
     @Override
@@ -101,15 +96,10 @@ public class LoginController extends HttpServlet {
 
     private boolean checkLoginClient(HttpServletRequest request) throws DAOException {
         boolean result = false;
+        // Les paramètres transmis dans la requête
         String loginParamC = request.getParameter("loginParamC");
         String passwordParamC = request.getParameter("passwordParamC");
-    /*    Connection connection = null;
-        Statement stmt = null;
-        try {
-            connection = getConnectionWithDriverManager();
-            stmt = connection.createStatement();
-        } catch (SQLException ex) {
-        }*/
+
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         Model.CustomerEntity client = dao.findClient(loginParamC, passwordParamC);
         if (client != null) {
