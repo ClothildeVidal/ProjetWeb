@@ -3,12 +3,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Administrateur</title>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
 
-            google.charts.load("visualization", "1", {packages: ["corechart"]});
+            google.load("visualization", "1", {packages: ["corechart"]});
             google.setOnLoadCallback(doAjax);
 //            google.setOnLoadCallback(doAjax2);
 //            google.setOnLoadCallback(doAjax3);
