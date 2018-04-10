@@ -30,21 +30,23 @@ public class LoginController extends HttpServlet {
                 case "Connexion":
                     if (checkLoginAdmin(request)) {
                         isAdmin = true;
+                        String userName = findUserInSession(request);
                         break;
                     }
                     if (checkLoginClient(request)) {
                         isClient = true;
+                        String userName = findUserInSession(request);
                         break;
                     }
-                case "logout":
-                    doLogout(request);
-                    isAdmin = false;
-                    isClient = false;
-                    break;
+                case "Deconnexion":
+                    if (doLogout(request)) {
+                        isAdmin = false;
+                        isClient = false;
+                        break;
+                    }
             }
         }
-
-        String userName = findUserInSession(request);
+        
         String jspView;
 
         if (isClient == false && isAdmin == false) { // L'utilisateur n'est pas connecté
@@ -188,12 +190,15 @@ public class LoginController extends HttpServlet {
         return result;
     }
 
-    private void doLogout(HttpServletRequest request) {
+    private boolean doLogout(HttpServletRequest request) {
+        boolean result = false;
         // On termine la session
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
+            result = true;
         }
+        return result;
     }
 
     private String findUserInSession(HttpServletRequest request) {
@@ -208,5 +213,4 @@ public class LoginController extends HttpServlet {
         // On se connecte au serveur
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
-
 }

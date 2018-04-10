@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>You are connected</title>
+        <title>Commande</title>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
 
@@ -99,10 +99,8 @@
         "<a href="<c:url value="protected/protectedPage2.html"/>">protected</a>".<br>
 
         <form action="<c:url value='/'/>" method="POST"> 
-            <input type='submit' name='action' value='logout'>
+            <input type='submit' name='action' value='Deconnexion'>
         </form>
-        <hr/>
-        <h3>Il y a actuellement ${applicationScope.numberConnected} utilisateurs connectés</h3>
         <div id="chart_div"></div>
 
     </body>
