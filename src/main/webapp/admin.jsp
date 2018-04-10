@@ -9,7 +9,7 @@
         <script type="text/javascript">
 
             google.charts.load("visualization", "1", {packages: ["corechart"]});
-            google.charts.setOnLoadCallback(doAjax);
+            google.setOnLoadCallback(doAjax);
 //            google.setOnLoadCallback(doAjax2);
 //            google.setOnLoadCallback(doAjax3);
 
@@ -18,28 +18,28 @@
                 var data = google.visualization.arrayToDataTable(dataArray);
                 var options = {'title': 'Chiffre d affaires'};
 
-                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
             }
-            function doAjax() {
-                $.ajax({
-                    url: "CaParProduit",
-                    dataType: "json",
-                    success: // La fonction qui traite les résultats
-                            function (result) {
-                                // On reformate le résultat comme un tableau
-                                var chartData = [];
-                                // On met le descriptif des données
-                                chartData.push(["Produit", "Ventes"]);
-                                for (var produit in result.records) {
-                                    chartData.push([produit, result.records[produit]]);
-                                }
-                                // On dessine le graphique
-                                drawChart(chartData);
-                            },
-                    error: showError
-                });
-            }
+//            function doAjax() {
+//                $.ajax({
+//                    url: "CaParProduit",
+//                    dataType: "json",
+//                    success: // La fonction qui traite les résultats
+//                            function (result) {
+//                                // On reformate le résultat comme un tableau
+//                                var chartData = [];
+//                                // On met le descriptif des données
+//                                chartData.push(["Produit", "Ventes"]);
+//                                for (var produit in result.records) {
+//                                    chartData.push([produit, result.records[produit]]);
+//                                }
+//                                // On dessine le graphique
+//                                drawChart(chartData);
+//                            },
+//                    error: showError
+//                });
+//            }
 //            function doAjax2() {
 //                $.ajax({
 //                    url: "CaParZone",
@@ -61,28 +61,29 @@
 //            }
 
             // Fonction qui traite les erreurs de la requête
-            function showError(xhr, status, message) {
+           
+            function doAjax() {
+                $.ajax({
+                    url: "CaParClient",
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Client", "Ventes"]);
+                                for (var client in result.records) {
+                                    chartData.push([client, result.records[client]]);
+                                }
+                                // On dessine le graphique
+                                drawChart(chartData);
+                            },
+                    error: showError
+                });
+            }
+             function showError(xhr, status, message) {
                 alert("Erreur: " + status + " : " + message);
             }
-//            function doAjax3() {
-//                $.ajax({
-//                    url: "CaParClient",
-//                    dataType: "json",
-//                    success: // La fonction qui traite les résultats
-//                            function (result) {
-//                                // On reformate le résultat comme un tableau
-//                                var chartData = [];
-//                                // On met le descriptif des données
-//                                chartData.push(["Client", "Ventes"]);
-//                                for (var client in result.records) {
-//                                    chartData.push([client, result.records[client]]);
-//                                }
-//                                // On dessine le graphique
-//                                drawChart(chartData);
-//                            },
-//                    error: showError
-//                });
-//            }
         </script>
     </head>
     <body>
@@ -94,7 +95,8 @@
         </form>
         <hr/>
         <h3>Il y a actuellement ${applicationScope.numberConnected} utilisateurs connectés</h3>
-                	<a href='CaParProduit' target="_blank">Voir les données brutes</a><br>
-        <div id="chart_div" style="width: 900px; height: 500px;"></div>
+        <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d affaires par produit</a><br>
+        <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d affaires par client</a><br>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
     </body>
 </html>

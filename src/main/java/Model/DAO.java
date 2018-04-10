@@ -161,7 +161,7 @@ public class DAO {
 
     public Map<String, Double> CaParZone() throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.COSTUMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY STATE";
+        String sql = "SELECT STATE, SUM(SHIPPING_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID) GROUP BY STATE";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -181,7 +181,7 @@ public class DAO {
 
     public Map<String, Double> CaParClient() throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.COSTUMER_ID = o.COSTUMER_ID) GROUP BY COSTUMER_ID";
+        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID) GROUP BY NAME";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
