@@ -28,7 +28,7 @@
                 var data = google.visualization.arrayToDataTable(dataArray);
                 var options = {'title': 'Chiffre d affaires par produit'};
 
-                var chart = new google.visualization.BarChart(document.getElementById('piechart2'));
+                var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
                 chart.draw(data, options);
             }
 
@@ -37,7 +37,7 @@
                 var data = google.visualization.arrayToDataTable(dataArray);
                 var options = {'title': 'Chiffre d affaires par zone'};
 
-                var chart = new google.visualization.BarChart(document.getElementById('piechart3'));
+                var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
                 chart.draw(data, options);
             }
 

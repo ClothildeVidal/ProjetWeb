@@ -80,18 +80,6 @@
     </head>
     <body>
         <h1>Bienvenue ${userName}</h1>
-        Vous avez maintenant accès aux fichiers dans le répertoire 
-        "<a href="<c:url value="protected/protectedPage2.html"/>">protected</a>".<br>
-        <div>
-            Cette page utilise les servlets suivantes :
-            <ul>
-                <li><a href="allCodes" target="_blank">ListCodesJsonServlet : liste les codes</a></li>
-                <li><a href="addCode?code=D&taux=12.34" target="_blank">AddCodeJsonServlet : ajoute un code</a></li>
-                <li><a href="deleteCode?code=D" target="_blank">DeleteCodeJsonServlet : supprime un code</a></li>
-            </ul>
-            La page utilise également le <a href="https://mustache.github.io/" target="_blank">moteur de template Mustache</a> pour formatter le résultat.<br>
-            <hr>
-        </div>
         <!-- On montre le formulaire de saisie -->
         <h1>Edition des taux de remise (AJAX)</h1>
         <form id="codeForm" onsubmit="event.preventDefault(); addCode();">

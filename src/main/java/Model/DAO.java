@@ -20,8 +20,8 @@ public class DAO {
     public DAO(DataSource dataSource) {
         this.myDataSource = dataSource;
     }
-    
-    public List<CustomerEntity> allCodes() throws SQLException {
+
+    public List<CustomerEntity> allCustomers() throws SQLException {
 
         List<CustomerEntity> result = new LinkedList<>();
 
@@ -33,6 +33,30 @@ public class DAO {
                 int id = rs.getInt("CUSTOMER_ID");
                 String email = rs.getString("EMAIL");
                 CustomerEntity c = new CustomerEntity(id, email);
+                result.add(c);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Contenu de la table DISCOUNT_CODE
+     *
+     * @return Liste des discount codes
+     * @throws SQLException renvoyées par JDBC
+     */
+    public List<DiscountCode> allCodes() throws SQLException {
+
+        List<DiscountCode> result = new LinkedList<>();
+
+        String sql = "SELECT * FROM DISCOUNT_CODE ORDER BY DISCOUNT_CODE";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("DISCOUNT_CODE");
+                float rate = rs.getFloat("RATE");
+                DiscountCode c = new DiscountCode(id, rate);
                 result.add(c);
             }
         }
@@ -65,6 +89,26 @@ public class DAO {
      * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
      * @throws DAOException
      */
+    /**
+     * Ajout d'un enregistrement dans la table DISCOUNT_CODE
+     *
+     * @param code le code (non null)
+     * @param rate le taux (positive or 0)
+     * @return 1 si succès, 0 sinon
+     * @throws SQLException renvoyées par JDBC
+     */
+    public int addDiscountCode(String code, float rate) throws SQLException {
+        int result = 0;
+        String sql = "INSERT INTO DISCOUNT_CODE VALUES (?, ?)";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, code);
+            stmt.setFloat(2, rate);
+            result = stmt.executeUpdate();
+        }
+        return result;
+    }
+
     public int deleteCustomer(int customerId) throws DAOException {
 
         // Une requête SQL paramétrée
@@ -80,6 +124,25 @@ public class DAO {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
         }
+    }
+
+    /**
+     * Supprime un enregistrement dans la table DISCOUNT_CODE
+     *
+     * @param code la clé de l'enregistrement à supprimer
+     * @return le nombre d'enregistrements supprimés (1 ou 0)
+     * @throws java.sql.SQLException renvoyées par JDBC
+	 *
+     */
+    public int deleteDiscountCode(String code) throws SQLException {
+        int result = 0;
+        String sql = "DELETE FROM DISCOUNT_CODE WHERE DISCOUNT_CODE = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, code);
+            result = stmt.executeUpdate();
+        }
+        return result;
     }
 
     /**
@@ -113,7 +176,7 @@ public class DAO {
         return result;
     }
 
-        public CustomerEntity findClient(String email, String customerID) throws DAOException {
+    public CustomerEntity findClient(String email, String customerID) throws DAOException {
         CustomerEntity result = null;
 
         String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
@@ -137,8 +200,7 @@ public class DAO {
 
         return result;
     }
-        
-        
+
     public Map<String, Double> CaParProduit() throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
