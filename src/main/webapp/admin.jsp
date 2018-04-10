@@ -11,58 +11,36 @@
 
             google.load("visualization", "1", {packages: ["corechart"]});
             google.setOnLoadCallback(doAjax);
-//            google.setOnLoadCallback(doAjax2);
-//            google.setOnLoadCallback(doAjax3);
+            google.setOnLoadCallback(doAjax2);
+            google.setOnLoadCallback(doAjax3);
 
             function drawChart(dataArray) {
 
                 var data = google.visualization.arrayToDataTable(dataArray);
-                var options = {'title': 'Chiffre d affaires'};
+                var options = {'title': 'Chiffre d affaires par client'};
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
             }
-//            function doAjax() {
-//                $.ajax({
-//                    url: "CaParProduit",
-//                    dataType: "json",
-//                    success: // La fonction qui traite les résultats
-//                            function (result) {
-//                                // On reformate le résultat comme un tableau
-//                                var chartData = [];
-//                                // On met le descriptif des données
-//                                chartData.push(["Produit", "Ventes"]);
-//                                for (var produit in result.records) {
-//                                    chartData.push([produit, result.records[produit]]);
-//                                }
-//                                // On dessine le graphique
-//                                drawChart(chartData);
-//                            },
-//                    error: showError
-//                });
-//            }
-//            function doAjax2() {
-//                $.ajax({
-//                    url: "CaParZone",
-//                    dataType: "json",
-//                    success: // La fonction qui traite les résultats
-//                            function (result) {
-//                                // On reformate le résultat comme un tableau
-//                                var chartData = [];
-//                                // On met le descriptif des données
-//                                chartData.push(["Zone", "Ventes"]);
-//                                for (var produit in result.records) {
-//                                    chartData.push([zone, result.records[zone]]);
-//                                }
-//                                // On dessine le graphique
-//                                drawChart(chartData);
-//                            },
-//                    error: showError
-//                });
-//            }
 
-            // Fonction qui traite les erreurs de la requête
-           
+            function drawChart2(dataArray) {
+
+                var data = google.visualization.arrayToDataTable(dataArray);
+                var options = {'title': 'Chiffre d affaires par produit'};
+
+                var chart = new google.visualization.BarChart(document.getElementById('piechart2'));
+                chart.draw(data, options);
+            }
+
+            function drawChart3(dataArray) {
+
+                var data = google.visualization.arrayToDataTable(dataArray);
+                var options = {'title': 'Chiffre d affaires par zone'};
+
+                var chart = new google.visualization.BarChart(document.getElementById('piechart3'));
+                chart.draw(data, options);
+            }
+
             function doAjax() {
                 $.ajax({
                     url: "CaParClient",
@@ -82,7 +60,51 @@
                     error: showError
                 });
             }
-             function showError(xhr, status, message) {
+            
+            function doAjax2() {
+                $.ajax({
+                    url: "CaParProduit",
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Produit", "Ventes"]);
+                                for (var produit in result.records) {
+                                    chartData.push([produit, result.records[produit]]);
+                                }
+                                // On dessine le graphique
+                                drawChart2(chartData);
+                            },
+                    error: showError
+                });
+            }
+            
+            function doAjax3() {
+                $.ajax({
+                    url: "CaParZone",
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Zone", "Ventes"]);
+                                for (var zone in result.records) {
+                                    chartData.push([zone, result.records[zone]]);
+                                }
+                                // On dessine le graphique
+                                drawChart3(chartData);
+                            },
+                    error: showError
+                });
+            }
+
+            // Fonction qui traite les erreurs de la requête
+
+
+            function showError(xhr, status, message) {
                 alert("Erreur: " + status + " : " + message);
             }
         </script>
@@ -99,5 +121,7 @@
         <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d affaires par produit</a><br>
         <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d affaires par client</a><br>
         <div id="piechart" style="width: 900px; height: 500px;"></div>
+        <div id="piechart2" style="width: 900px; height: 500px;"></div>
+        <div id="piechart3" style="width: 900px; height: 500px;"></div>
     </body>
 </html>
