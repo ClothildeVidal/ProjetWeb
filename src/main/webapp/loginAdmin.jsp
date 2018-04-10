@@ -14,8 +14,8 @@
 <!--        <div style="color:red">${errorMessage}</div> -->
         <div id="form">
             <form action= "<c:url value='/' />" method="POST"> 
-                Identifiant : <input name='loginParam'><br>
-                Mot de passe : <input name='passwordParam' type='password'><br>
+                Identifiant (untel): <input name='loginParam'><br>
+                Mot de passe (ABCD): <input name='passwordParam' type='password'><br>
                 <input type='submit' name='action' value='Connexion'>
             </form>
         </div>
