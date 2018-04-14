@@ -8,6 +8,10 @@
         <servlet-name>CaParClient</servlet-name>
         <servlet-class>Servlet.CaParClient</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListeCommandes</servlet-name>
+        <servlet-class>Servlet.ListeCommandes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CaParProduit</servlet-name>
         <url-pattern>/CaParProduit</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>CaParClient</servlet-name>
         <url-pattern>/CaParClient</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListeCommandes</servlet-name>
+        <url-pattern>/ListeCommandes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

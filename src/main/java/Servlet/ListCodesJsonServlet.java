@@ -19,10 +19,7 @@ import java.util.Properties;
 import Model.DAO;
 import Model.DataSourceFactory;
 
-/**
- *
- * @author rbastide
- */
+
 @WebServlet(name = "codesInJSON", urlPatterns = {"/allCodes"})
 public class ListCodesJsonServlet extends HttpServlet {
 

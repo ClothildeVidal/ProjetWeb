@@ -63,6 +63,30 @@ public class DAO {
         return result;
     }
 
+    public List<Commandes> commandesParClient(String email) throws SQLException {
+        List<Commandes> result = new LinkedList<>();
+        // Une requête SQL paramétrée
+        String sql = "SELECT order_num, product_id, quantity, shipping_cost FROM purchase_order inner joincustomer using(customer_id) WHERE email = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // On récupère les champs nécessaires de l'enregistrement courant
+                    int OrderNum = rs.getInt("order_num");
+                    int produitId = rs.getInt("product_id");
+                    int quantite = rs.getInt("quantity");
+                    float cout = rs.getFloat("shipping_cost");
+                    // On crée l'objet entité
+                    Commandes c = new Commandes(OrderNum, produitId, quantite, cout);
+                    // On l'ajoute à la liste des résultats
+                    result.add(c);
+                }
+            }
+        }
+        return result;
+    }
+
     /**
      * Ajout d'un enregistrement dans la table CUSTOMER
      *
@@ -132,7 +156,7 @@ public class DAO {
      * @param code la clé de l'enregistrement à supprimer
      * @return le nombre d'enregistrements supprimés (1 ou 0)
      * @throws java.sql.SQLException renvoyées par JDBC
-	 *
+     *
      */
     public int deleteDiscountCode(String code) throws SQLException {
         int result = 0;
