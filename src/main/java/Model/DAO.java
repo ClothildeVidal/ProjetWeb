@@ -66,7 +66,7 @@ public class DAO {
     public List<Commandes> commandesParClient(String email) throws SQLException {
         List<Commandes> result = new LinkedList<>();
         // Une requête SQL paramétrée
-        String sql = "SELECT order_num, product_id, quantity, shipping_cost FROM purchase_order inner joincustomer using(customer_id) WHERE email = ?";
+        String sql = "SELECT order_num, product_id, quantity, shipping_cost FROM purchase_order inner join customer using(customer_id) WHERE email = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -132,6 +132,18 @@ public class DAO {
         }
         return result;
     }
+    /*
+    public String addProduct(String description, float prix) throws SQLException {
+        String result = null;
+        String sql = "INSERT INTO PURCHASE_ORDER VALUES (?, ?, ?, ?)";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, code);
+            stmt.setFloat(2, rate);
+            result = stmt.executeUpdate();
+        }
+        return result;
+    }*/
 
     public int deleteCustomer(int customerId) throws DAOException {
 
