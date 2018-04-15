@@ -15,14 +15,14 @@ public class Commandes {
     private float cout;
     private int produit;
     private int quantite;
-  //  private String description;
+    private String description;
 
-    public Commandes(int orderID, int produit, int quantite, float cout/*, String description*/) {
+    public Commandes(int orderID, int produit, int quantite, float cout, String description) {
         this.orderID = orderID;
         this.produit = produit;
         this.quantite = quantite;
         this.cout = cout;
-    //    this.description = description;
+        this.description = description;
     }
 
     public int getProduit() {
@@ -41,8 +41,7 @@ public class Commandes {
         return cout;
     }
 
-  /*  public String getDescription() {
+    public String getDescription() {
         return description;
-    }*/
-
+    }
 }

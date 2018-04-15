@@ -66,7 +66,7 @@ public class DAO {
     public List<Commandes> commandesParClient(String email) throws SQLException {
         List<Commandes> result = new LinkedList<>();
         // Une requête SQL paramétrée
-        String sql = "SELECT order_num, product_id, quantity, shipping_cost FROM purchase_order inner join customer using(customer_id) WHERE email = ?";
+        String sql = "SELECT order_num, product_id, quantity, shipping_cost, description FROM product inner join purchase_order using (product_id) inner join customer using(customer_id) WHERE email = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -77,8 +77,9 @@ public class DAO {
                     int produitId = rs.getInt("product_id");
                     int quantite = rs.getInt("quantity");
                     float cout = rs.getFloat("shipping_cost");
+                    String description = rs.getString("description");
                     // On crée l'objet entité
-                    Commandes c = new Commandes(OrderNum, produitId, quantite, cout);
+                    Commandes c = new Commandes(OrderNum, produitId, quantite, cout, description);
                     // On l'ajoute à la liste des résultats
                     result.add(c);
                 }

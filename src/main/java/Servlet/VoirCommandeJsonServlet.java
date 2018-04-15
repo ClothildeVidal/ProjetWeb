@@ -22,7 +22,7 @@ import Model.DataSourceFactory;
  * @author rbastide
  */
 @WebServlet(name = "deleteDiscountCode", urlPatterns = {"/deleteCode"})
-public class DeleteCodeJsonServlet extends HttpServlet {
+public class VoirCommandeJsonServlet extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
