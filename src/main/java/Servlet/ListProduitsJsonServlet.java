@@ -20,8 +20,8 @@ import Model.DAO;
 import Model.DataSourceFactory;
 
 
-@WebServlet(name = "codesInJSON", urlPatterns = {"/allCodes"})
-public class ListCodesJsonServlet extends HttpServlet {
+@WebServlet(name = "produitsInJSON", urlPatterns = {"/allProduits"})
+public class ListProduitsJsonServlet extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

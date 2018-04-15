@@ -15,26 +15,46 @@
         <script>
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
-                        // On montre la liste des codes
-                        showCodes();
+                        fillProductSelector();
+                        showProduits();
                         showCommandes();
                     }
             );
 
-            function showCodes() {
-                // On fait un appel AJAX pour chercher les codes
+            function fillProductSelector() {
+                // On fait un appel AJAX pour chercher les produits existants
                 $.ajax({
-                    url: "allCodes",
+                    url: "allProduits",
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
                             function (result) {
                                 // Le code source du template est dans la page
-                                var template = $('#codesTemplate').html();
+                                var template = $('#selectTemplate').html();
                                 // On combine le template avec le résultat de la requête
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
-                                $('#codes').html(processedTemplate);
+                                $('#product').html(processedTemplate);
+                                // On initialise l'affichage des clients
+                                showCustomersInState();
+                            }
+                });
+            }
+
+            function showProduits() {
+                // On fait un appel AJAX pour chercher les codes
+                $.ajax({
+                    url: "allProduits",
+                    dataType: "json",
+                    error: showError,
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#ProduitsTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#produits').html(processedTemplate);
                             }
                 });
             }
@@ -109,14 +129,39 @@
         <h2>Edition d'une nouvelle commande</h2>
         <form id="codeForm" onsubmit="event.preventDefault(); addProduct();">
             <fieldset><legend>Ajout d'un produit à la commande</legend>
-                Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>
+                <form>
+                    <label for="product">Produit :</label>
+                    <select id="product"></select>
+                </form>
+                <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
                 Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
                 <input type="submit" value="Ajouter">
             </fieldset>
         </form>
+        <h3>Produits sélectionnés</h3>
+        <div id="produits"></div>
+        <script id="selectTemplate" type="text/template">
+                                {{! Pour chaque produit dans le tableau}}
+                                {{#records}}
+                                        {{! Une option dans le select }}
+                                        {{! le point représente la valeur courante du tableau }}
+                                        <OPTION VALUE="{{.}}">{{.}}</OPTION>
+                                {{/records}}
+                        </TABLE>
+        </script>
+        <!--Le template qui sert à formatter la liste des codes--> 
+        <script id="produitsTemplate" type="text/template">
+            <TABLE>
+            <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
+            {{! Pour chaque enregistrement }}
+            {{#records}}
+            {{! Une ligne dans la table }}
+            <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD></TR>
+            {{/records}}
+            </TABLE>
+        </script>
         <h2>Anciennes commandes</h2>
         <div id="codes"></div>
-
         <!--Le template qui sert à formatter la liste des codes--> 
         <script id="codesTemplate" type="text/template">
             <TABLE>
@@ -129,8 +174,8 @@
             </TABLE>
         </script>
         <div id="commandes"></div>
-        <form action="<c:url value='/'/>" method="POST"> 
-            <input type='submit' name='action' value='Deconnexion'>
-        </form>
+            <form action="<c:url value='/'/>" method="POST"> 
+                <input type='submit' name='action' value='Deconnexion'>
+            </form>
     </body>
 </html>
