@@ -88,6 +88,22 @@ public class DAO {
         return result;
     }
 
+    public List<String> existingProducts() throws DAOException {
+        List<String> result = new LinkedList<>();
+        String sql = "SELECT DISTINCT DESCRIPTION FROM PRODUCT";
+        try (Connection connection = myDataSource.getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String produit = rs.getString("DESCRIPTION");
+                result.add(produit);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e.getMessage());
+        }
+        return result;
+    }
+
     /**
      * Ajout d'un enregistrement dans la table CUSTOMER
      *
@@ -133,6 +149,7 @@ public class DAO {
         }
         return result;
     }
+
     /*
     public String addProduct(String description, float prix) throws SQLException {
         String result = null;

@@ -177,5 +177,8 @@
             <form action="<c:url value='/'/>" method="POST"> 
                 <input type='submit' name='action' value='Deconnexion'>
             </form>
+                <li>
+                <a href="ProductForm">Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
+            </li>
     </body>
 </html>
