@@ -90,13 +90,20 @@ public class DAO {
 
     public List<String> existingProducts() throws DAOException {
         List<String> result = new LinkedList<>();
+//        String sql = "SELECT PRODUCT_ID, PRODUCT_CODE, PURCHASE_COST, DESCRIPTION FROM PRODUCT";
         String sql = "SELECT DISTINCT DESCRIPTION FROM PRODUCT";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                String produit = rs.getString("DESCRIPTION");
-                result.add(produit);
+//                int productID = rs.getInt("PRODUCT_ID");
+//                int productCode = rs.getInt("PRODUCT_CODE");
+//                float cost = rs.getFloat("PURCHASE_COST");
+                String description = rs.getString("DESCRIPTION");
+                result.add(description);
+//                Produits p = new Produits(productID, productCode, 0, cost, description);
+//                
+//                result.add(p);
             }
         } catch (SQLException e) {
             throw new DAOException(e.getMessage());
@@ -277,7 +284,7 @@ public class DAO {
 
     public Map<String, Double> CaParZone() throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID) INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID) GROUP BY STATE";
+        String sql = "SELECT STATE, SUM(SHIPPING_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID) GROUP BY STATE";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {

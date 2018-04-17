@@ -15,9 +15,11 @@
         <script>
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
+                        listProduits();
                         fillProductSelector();
                         showProduits();
                         showCommandes();
+                        
                     }
             );
 
@@ -82,6 +84,24 @@
                                     }
                         });
             }
+            
+            function listProduits() {
+                // On fait un appel AJAX pour chercher les codes
+                $.ajax({
+                    url: "ProductForm",
+                    dataType: "json",
+                    error: showError,
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#listProdTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#choixProduct').html(processedTemplate);
+                            }
+                });
+            }
             // Ajouter un code
             function addProduct() {
                 $.ajax({
@@ -127,12 +147,27 @@
     <body>
         <h1>Bienvenue ${userName}</h1>
         <h2>Edition d'une nouvelle commande</h2>
-        <form id="codeForm" onsubmit="event.preventDefault(); addProduct();">
-            <fieldset><legend>Ajout d'un produit à la commande</legend>
-                <form>
+<!--        <form id="codeForm" onsubmit="event.preventDefault(); addProduct();">-->
+            <script id="listProdTemplate" type="text/template">
+                    <FORM>
                     <label for="product">Produit :</label>
-                    <select id="product"></select>
-                </form>
+                        <select id="product">
+                            {{! Pour chaque enregistrement }}
+                            {{#records}}
+                            {{! Une ligne dans la table }}
+                            <option value="{{.}}">{{.}}</option>
+<!--                            <OPTION VALUE="{{.}}">{{.}}</OPTION>-->
+                            {{/records}}
+                        </select>
+                    </FORM>
+                </script>
+            <fieldset><legend>Ajout d'un produit à la commande</legend>
+<!--                <form>
+                    <label for="product">Produit :</label>-->
+                    <!--<select id="product">-->
+                        <div id="choixProduct"></div>
+                    <!--</select>-->
+                <!--</form>-->
                 <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
                 Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
                 <input type="submit" value="Ajouter">
@@ -178,7 +213,8 @@
                 <input type='submit' name='action' value='Deconnexion'>
             </form>
                 <li>
-                <a href="ProductForm">Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
+                <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
+                <a href="ListeCommandes">ListeCommandes Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
             </li>
     </body>
 </html>
