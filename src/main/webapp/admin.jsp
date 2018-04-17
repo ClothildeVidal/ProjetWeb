@@ -9,15 +9,45 @@
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
 
-            google.load("visualization", "1", {packages: ["corechart"]});
+            google.load("visualization", "1", {packages: ["corechart", 'controls']});
+            google.setOnLoadCallback(drawDashboard);
             google.setOnLoadCallback(doAjax);
             google.setOnLoadCallback(doAjax2);
             google.setOnLoadCallback(doAjax3);
+            function drawDashboard() {
+
+                var data = google.visualization.arrayToDataTable(dataArray);
+                var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
+                var rangeSlider = new google.visualization.ControlWrapper({
+                    'controlType': 'DateRangeFilter',
+                    'containerId': 'filter_div',
+                    'option': {
+                        'filterColumnLabel': 'Période'
+                    }
+                });
+
+                var options = {'title': 'Chiffre d\'affaires par client'};
+                var pieChart = new google.visualization.ChartWrapper({
+                    'chartType': 'PieChart',
+                    'containerId': 'chart_div',
+                    'options': {
+                        'width': 300,
+                        'height': 300,
+                        'pieSliceText': 'value',
+                        'legend': 'right'
+                    }
+                });
+                dashboard.bind(donutRangeSlider, pieChart);
+
+                // Draw the dashboard.
+                dashboard.draw(data);
+                chart.draw(data, options);
+            }
 
             function drawChart(dataArray) {
 
                 var data = google.visualization.arrayToDataTable(dataArray);
-                var options = {'title': 'Chiffre d affaires par client'};
+                var options = {'title': 'Chiffre d\'affaires par client'};
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
@@ -26,7 +56,7 @@
             function drawChart2(dataArray) {
 
                 var data = google.visualization.arrayToDataTable(dataArray);
-                var options = {'title': 'Chiffre d affaires par produit'};
+                var options = {'title': 'Chiffre d\'affaires par produit'};
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
                 chart.draw(data, options);
@@ -35,7 +65,7 @@
             function drawChart3(dataArray) {
 
                 var data = google.visualization.arrayToDataTable(dataArray);
-                var options = {'title': 'Chiffre d affaires par zone'};
+                var options = {'title': 'Chiffre d\'affaires par zone'};
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
                 chart.draw(data, options);
@@ -60,7 +90,7 @@
                     error: showError
                 });
             }
-            
+
             function doAjax2() {
                 $.ajax({
                     url: "CaParProduit",
@@ -80,7 +110,7 @@
                     error: showError
                 });
             }
-            
+
             function doAjax3() {
                 $.ajax({
                     url: "CaParZone",
@@ -118,10 +148,15 @@
         </form>
         <hr/>
         <h3>Il y a actuellement ${applicationScope.numberConnected} utilisateurs connectés</h3>
-        <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d affaires par produit</a><br>
-        <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d affaires par client</a><br>
-        <div id="piechart" style="width: 900px; height: 500px;"></div>
-        <div id="piechart2" style="width: 900px; height: 500px;"></div>
-        <div id="piechart3" style="width: 900px; height: 500px;"></div>
+        <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d\'affaires par produit</a><br>
+        <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d\'affaires par client</a><br>
+        <a href='CaParZone' target="_blank">Voir les données brutes du chiffre d\'affaires par produit</a><br>
+        <div id="dashboard_div">
+            <div id="filter_div"></div>
+            <div id="piechart" style="width: 900px; height: 500px;"></div>
+            <div id="piechart2" style="width: 900px; height: 500px;"></div>
+            <div id="piechart3" style="width: 900px; height: 500px;"></div>
+
+        </div>
     </body>
 </html>
