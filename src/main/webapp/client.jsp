@@ -16,8 +16,8 @@
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
                         listProduits();
-                        fillProductSelector();
-                        showProduits();
+//                        fillProductSelector();
+//                        showProduits();
                         showCommandes();
                         
                     }
@@ -156,7 +156,6 @@
                             {{#records}}
                             {{! Une ligne dans la table }}
                             <option value="{{.}}">{{.}}</option>
-<!--                            <OPTION VALUE="{{.}}">{{.}}</OPTION>-->
                             {{/records}}
                         </select>
                     </FORM>
@@ -175,7 +174,7 @@
         </form>
         <h3>Produits sélectionnés</h3>
         <div id="produits"></div>
-        <script id="selectTemplate" type="text/template">
+<!--        <script id="selectTemplate" type="text/template">
                                 {{! Pour chaque produit dans le tableau}}
                                 {{#records}}
                                         {{! Une option dans le select }}
@@ -184,7 +183,7 @@
                                 {{/records}}
                         </TABLE>
         </script>
-        <!--Le template qui sert à formatter la liste des codes--> 
+        Le template qui sert à formatter la liste des codes 
         <script id="produitsTemplate" type="text/template">
             <TABLE>
             <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
@@ -194,7 +193,7 @@
             <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD></TR>
             {{/records}}
             </TABLE>
-        </script>
+        </script>-->
         <h2>Anciennes commandes</h2>
         <div id="codes"></div>
         <!--Le template qui sert à formatter la liste des codes--> 
@@ -204,7 +203,7 @@
             {{! Pour chaque enregistrement }}
             {{#records}}
             {{! Une ligne dans la table }}
-            <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD></TR>
+            <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCode('{{discountCode}}')">Supprimer</button></TD></TR>
             {{/records}}
             </TABLE>
         </script>
@@ -213,7 +212,7 @@
                 <input type='submit' name='action' value='Deconnexion'>
             </form>
                 <li>
-                <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
+                    <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a></br>
                 <a href="ListeCommandes">ListeCommandes Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
             </li>
     </body>
