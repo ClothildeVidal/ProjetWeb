@@ -131,6 +131,25 @@
                 });
             }
 
+            function date() {
+                $.ajax({
+                    url: "CaParZone",
+                    dataType: "json",
+                    success:
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Zone", "Ventes"]);
+                                for (var zone in result.records) {
+                                    chartData.push([zone, result.records[zone]]);
+                                }
+                                // On dessine le graphique
+                                drawChart3(chartData);
+                            },
+                    error: showError
+                })
+            }
             // Fonction qui traite les erreurs de la requête
 
 
@@ -151,12 +170,12 @@
         <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d\'affaires par produit</a><br>
         <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d\'affaires par client</a><br>
         <a href='CaParZone' target="_blank">Voir les données brutes du chiffre d\'affaires par produit</a><br>
-        <div id="dashboard_div">
-            <div id="filter_div"></div>
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
-            <div id="piechart2" style="width: 900px; height: 500px;"></div>
-            <div id="piechart3" style="width: 900px; height: 500px;"></div>
 
-        </div>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+        <div id="piechart2" style="width: 900px; height: 500px;"></div>
+        <div id="piechart3" style="width: 900px; height: 500px;"></div>
+        <form id="graphique"><input type="submit" value='Rafraichir'>
+        <input type="date" name="dateD" id="dateDeb">
+        <input type="date" name="dateF" id="dateFin"></form>
     </body>
 </html>
