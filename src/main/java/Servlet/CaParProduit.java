@@ -22,10 +22,12 @@ public class CaParProduit extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, DAOException {
+        String dateD = request.getParameter("dateD");
+        String dateF = request.getParameter("dateF");
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         // Properties est une Map<clé, valeur> pratique pour générer du JSON
         Properties resultat = new Properties();
-        resultat.put("records", dao.CaParProduit());
+        resultat.put("records", dao.CaParProduit(dateD, dateF));
 
         try (PrintWriter out = response.getWriter()) {
             // On spécifie que la servlet va générer du JSON

@@ -262,64 +262,79 @@ public class DAO {
         return result;
     }
 
-    public Map<String, Double> CaParProduit() throws DAOException {
+    public Map<String, Double> CaParProduit(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) GROUP BY PRODUCT_CODE";
+        String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) WHERE SALES_DATE BETWEEN ? AND ? GROUP BY PRODUCT_CODE";
         try (Connection connection = myDataSource.getConnection();
-                Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                // On récupère les champs nécessaires de l'enregistrement courant
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, dateD);
+            stmt.setString(2, dateF);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // On a trouvé
+                    // On récupère les champs nécessaires de l'enregistrement courant
                 String produit = rs.getString("PRODUCT_CODE");
                 double sales = rs.getDouble("SALES");
                 // On l'ajoute à la liste des résultats
                 result.put(produit, sales);
+                } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
         }
+
         return result;
     }
-
-    public Map<String, Double> CaParZone() throws DAOException {
+            
+    public Map<String, Double> CaParZone(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT STATE, SUM(SHIPPING_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID) GROUP BY STATE";
+        String sql = "SELECT STATE, SUM(SHIPPING_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID) WHERE TO_CHAR(SALES_DATE) BETWEEN ? AND ? GROUP BY STATE";
         try (Connection connection = myDataSource.getConnection();
-                Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                // On récupère les champs nécessaires de l'enregistrement courant
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, dateD);
+            stmt.setString(2, dateF);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // On a trouvé
+                    // On récupère les champs nécessaires de l'enregistrement courant
                 String zone = rs.getString("STATE");
                 double sales = rs.getDouble("SALES");
                 // On l'ajoute à la liste des résultats
                 result.put(zone, sales);
+                } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
         }
+
         return result;
     }
 
-    public Map<String, Double> CaParClient() throws DAOException {
+
+    public Map<String, Double> CaParClient(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID) GROUP BY NAME";
+        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID) WHERE TO_CHAR(SALES_DATE) BETWEEN ? AND ? GROUP BY NAME";
         try (Connection connection = myDataSource.getConnection();
-                Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                // On récupère les champs nécessaires de l'enregistrement courant
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, dateD);
+            stmt.setString(2, dateF);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) { // On a trouvé
+                    // On récupère les champs nécessaires de l'enregistrement courant
                 String name = rs.getString("NAME");
                 double sales = rs.getDouble("SALES");
                 // On l'ajoute à la liste des résultats
                 result.put(name, sales);
+                } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
         }
+
         return result;
     }
-
 }

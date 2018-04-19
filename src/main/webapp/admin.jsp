@@ -74,6 +74,8 @@
             function doAjax() {
                 $.ajax({
                     url: "CaParClient",
+                    data: {"dateD": dateD},
+                    data: {"dateF": dateF},
                     dataType: "json",
                     success: // La fonction qui traite les résultats
                             function (result) {
@@ -94,6 +96,8 @@
             function doAjax2() {
                 $.ajax({
                     url: "CaParProduit",
+                    data: {"dateD": dateD},
+                    data: {"dateF": dateF},
                     dataType: "json",
                     success: // La fonction qui traite les résultats
                             function (result) {
@@ -114,6 +118,8 @@
             function doAjax3() {
                 $.ajax({
                     url: "CaParZone",
+                    data: {"dateD": dateD},
+                    data: {"dateF": dateF},
                     dataType: "json",
                     success: // La fonction qui traite les résultats
                             function (result) {
@@ -170,12 +176,11 @@
         <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d\'affaires par produit</a><br>
         <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d\'affaires par client</a><br>
         <a href='CaParZone' target="_blank">Voir les données brutes du chiffre d\'affaires par produit</a><br>
-
+        <form id="graphique"><input type="submit" value='Rafraichir'>
+        <input type="date" name="dateD" id="dateD">
+        <input type="date" name="dateF" id="dateF"></form>
         <div id="piechart" style="width: 900px; height: 500px;"></div>
         <div id="piechart2" style="width: 900px; height: 500px;"></div>
         <div id="piechart3" style="width: 900px; height: 500px;"></div>
-        <form id="graphique"><input type="submit" value='Rafraichir'>
-        <input type="date" name="dateD" id="dateDeb">
-        <input type="date" name="dateF" id="dateFin"></form>
     </body>
 </html>
