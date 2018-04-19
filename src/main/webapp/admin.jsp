@@ -63,7 +63,6 @@
 //            }
 
             function affichage(event) {
-                console.log("ccccc");
                 event.preventDefault();
                 google.charts.setOnLoadCallback(doAjax);
                 google.charts.setOnLoadCallback(doAjax2);
