@@ -205,6 +205,17 @@ public class DAO {
         }
         return result;
     }
+    
+    public int deleteCommande(int orderID) throws SQLException {
+        int result = 0;
+        String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, orderID);
+            result = stmt.executeUpdate();
+        }
+        return result;
+    }
 
     /**
      * Trouver un Customer à partir de sa clé

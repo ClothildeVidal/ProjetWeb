@@ -10,7 +10,7 @@
         <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <!--On charge le moteur de template mustache https://mustache.github.io/--> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-        <!-- On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable -->
+         <!--On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable--> 
         <script type="text/javascript" 	src="javascript/jquery.jsontotable.min.js"></script>
         <script>
             $(document).ready(// Exécuté à la fin du chargement de la page
@@ -19,7 +19,7 @@
 //                        fillProductSelector();
 //                        showProduits();
                         showCommandes();
-                        
+
                     }
             );
 
@@ -82,9 +82,10 @@
                                         // On affiche la liste des options dans le select
                                         $('#codes').html(processedTemplate);
                                     }
+
                         });
             }
-            
+
             function listProduits() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
@@ -119,21 +120,38 @@
                 return false;
             }
 
-            // Supprimer un code
-            function deleteCode(code) {
-                $.ajax({
-                    url: "deleteCode",
-                    data: {"code": code},
-                    dataType: "json",
-                    success:
-                            function (result) {
-                                showCodes();
-                                console.log(result);
-                            },
-                    error: showError
-                });
-                return false;
-            }
+//            // Supprimer un code
+//            function deleteCode(code) {
+//                $.ajax({
+//                    url: "deleteCommande",
+//                    data: orderID = table.getValueAt(table.getSelectedRow(),1).toString(),
+//                    dataType: "json",
+//                    success:
+//                            console.log(orderID);
+//                            function (result) {
+//                                showCommandes();
+//                                console.log(result);
+//                            },
+//                    error: showError
+//                });
+//                return false;
+//            }
+
+//            // Modifier un code
+//            function modifierCode(code) {
+//                $.ajax({
+//                    url: "deleteCode",
+//                    data: {"code": code},
+//                    dataType: "json",
+//                    success:
+//                            function (result) {
+//                                showCodes();
+//                                console.log(result);
+//                            },
+//                    error: showError
+//                });
+//                return false;
+//            }
 
             // Fonction qui traite les erreurs de la requête
             function showError(xhr, status, message) {
@@ -147,73 +165,73 @@
     <body>
         <h1>Bienvenue ${userName}</h1>
         <h2>Edition d'une nouvelle commande</h2>
-<!--        <form id="codeForm" onsubmit="event.preventDefault(); addProduct();">-->
-            <script id="listProdTemplate" type="text/template">
-                    <FORM>
-                    <label for="product">Produit :</label>
-                        <select id="product">
-                            {{! Pour chaque enregistrement }}
-                            {{#records}}
-                            {{! Une ligne dans la table }}
-                            <option value="{{.}}">{{.}}</option>
-                            {{/records}}
-                        </select>
-                    </FORM>
-                </script>
-            <fieldset><legend>Ajout d'un produit à la commande</legend>
-<!--                <form>
-                    <label for="product">Produit :</label>-->
-                    <!--<select id="product">-->
-                        <div id="choixProduct"></div>
-                    <!--</select>-->
-                <!--</form>-->
-                <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
-                Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
-                <input type="submit" value="Ajouter">
-            </fieldset>
-        </form>
-        <h3>Produits sélectionnés</h3>
-        <div id="produits"></div>
-<!--        <script id="selectTemplate" type="text/template">
-                                {{! Pour chaque produit dans le tableau}}
-                                {{#records}}
-                                        {{! Une option dans le select }}
-                                        {{! le point représente la valeur courante du tableau }}
-                                        <OPTION VALUE="{{.}}">{{.}}</OPTION>
-                                {{/records}}
-                        </TABLE>
+        <!--        <form id="codeForm" onsubmit="event.preventDefault(); addProduct();">-->
+        <script id="listProdTemplate" type="text/template">
+            <FORM>
+            <label for="product">Produit :</label>
+            <select id="product">
+            {{! Pour chaque enregistrement }}
+            {{#records}}
+            {{! Une ligne dans la table }}
+            <option value="{{.}}">{{.}}</option>
+            {{/records}}
+            </select>
+            </FORM>
         </script>
-        Le template qui sert à formatter la liste des codes 
-        <script id="produitsTemplate" type="text/template">
-            <TABLE>
+        <fieldset><legend>Ajout d'un produit à la commande</legend>
+            <!--                <form>
+                                <label for="product">Produit :</label>-->
+            <!--<select id="product">-->
+            <div id="choixProduct"></div>
+            <!--</select>-->
+            <!--</form>-->
+            <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
+            Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
+            <input type="submit" value="Ajouter">
+        </fieldset>
+    </form>
+    <h3>Produits sélectionnés</h3>
+    <div id="produits"></div>
+    <!--        <script id="selectTemplate" type="text/template">
+                                    {{! Pour chaque produit dans le tableau}}
+                                    {{#records}}
+                                            {{! Une option dans le select }}
+                                            {{! le point représente la valeur courante du tableau }}
+                                            <OPTION VALUE="{{.}}">{{.}}</OPTION>
+                                    {{/records}}
+                            </TABLE>
+            </script>
+            Le template qui sert à formatter la liste des codes 
+            <script id="produitsTemplate" type="text/template">
+                <TABLE>
+                <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
+                {{! Pour chaque enregistrement }}
+                {{#records}}
+                {{! Une ligne dans la table }}
+                <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD></TR>
+                {{/records}}
+                </TABLE>
+            </script>-->
+    <h2>Anciennes commandes</h2>
+    <div id="codes"></div>
+    <!--Le template qui sert à formatter la liste des codes--> 
+    <script id="codesTemplate" type="text/template">
+            <TABLE id="table">
             <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
             {{! Pour chaque enregistrement }}
             {{#records}}
             {{! Une ligne dans la table }}
-            <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD></TR>
-            {{/records}}
-            </TABLE>
-        </script>-->
-        <h2>Anciennes commandes</h2>
-        <div id="codes"></div>
-        <!--Le template qui sert à formatter la liste des codes--> 
-        <script id="codesTemplate" type="text/template">
-            <TABLE>
-            <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
-            {{! Pour chaque enregistrement }}
-            {{#records}}
-            {{! Une ligne dans la table }}
-            <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCode('{{discountCode}}')">Supprimer</button></TD></TR>
-            {{/records}}
+    <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCode('{{orderID}}')" id="supp">Supprimer</button></TD><TD><button onclick="modifierCode('{{orderID}}')" id="modif">Modifier</button></TD></TR>
+    {{/r    ecords}}
             </TABLE>
         </script>
         <div id="commandes"></div>
             <form action="<c:url value='/'/>" method="POST"> 
-                <input type='submit' name='action' value='Deconnexion'>
-            </form>
-                <li>
-                    <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a></br>
-                <a href="ListeCommandes">ListeCommandes Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
-            </li>
-    </body>
+    <input type='submit' name='action' value='Deconnexion'>
+</form>
+<li>
+    <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a></br>
+    <a href="ListeCommandes">ListeCommandes Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
+</li>
+</body>
 </html>
