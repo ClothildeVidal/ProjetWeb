@@ -67,6 +67,8 @@
                 console.log("ccccc");
                 event.preventDefault();
                 google.charts.setOnLoadCallback(doAjax);
+                google.charts.setOnLoadCallback(doAjax2);
+                google.charts.setOnLoadCallback(doAjax3);
             }
             function drawChart(dataArray) {
 
@@ -77,26 +79,25 @@
                 chart.draw(data, options);
             }
 
-//            function drawChart2(dataArray) {
-//
-//                var data = google.visualization.arrayToDataTable(dataArray);
-//                var options = {'title': 'Chiffre d\'affaires par produit'};
-//
-//                var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-//                chart.draw(data, options);
-//            }
-//
-//            function drawChart3(dataArray) {
-//
-//                var data = google.visualization.arrayToDataTable(dataArray);
-//                var options = {'title': 'Chiffre d\'affaires par zone'};
-//
-//                var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
-//                chart.draw(data, options);
-//            }
+            function drawChart2(dataArray) {
+
+                var data = google.visualization.arrayToDataTable(dataArray);
+                var options = {'title': 'Chiffre d\'affaires par produit'};
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+                chart.draw(data, options);
+            }
+
+            function drawChart3(dataArray) {
+
+                var data = google.visualization.arrayToDataTable(dataArray);
+                var options = {'title': 'Chiffre d\'affaires par zone'};
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+                chart.draw(data, options);
+            }
 
             function doAjax() {
-                console.log("crotte");
                 $.ajax({
                     url: "CaParClient?dateD="+$('#dateD').val()+"&dateF="+$('#dateF').val(),
                     data: $('#graphique').serialize(),
@@ -104,7 +105,6 @@
                     success: // La fonction qui traite les résultats
                             function (result) {
                                 // On reformate le résultat comme un tableau
-                                    console.log(result);
                                 let chartData = [];
                                 // On met le descriptif des données
                                 chartData.push(["Client", "Ventes"]);
@@ -118,47 +118,47 @@
                 });
             }
 
-//            function doAjax2() {
-//                $.ajax({
-//                    url: "CaParProduit",
-//                    data: {"dateD": $("#dateD").val(), "dateF": $("#dateF").val()},
-//                    dataType: "json",
-//                    success: // La fonction qui traite les résultats
-//                            function (result) {
-//                                // On reformate le résultat comme un tableau
-//                                var chartData = [];
-//                                // On met le descriptif des données
-//                                chartData.push(["Produit", "Ventes"]);
-//                                for (var produit in result.records) {
-//                                    chartData.push([produit, result.records[produit]]);
-//                                }
-//                                // On dessine le graphique
-//                                drawChart2(chartData);
-//                            },
-//                    error: showError
-//                });
-//            }
+            function doAjax2() {
+                $.ajax({
+                    url: "CaParProduit?dateD="+$('#dateD').val()+"&dateF="+$('#dateF').val(),
+                    data: {"dateD": $("#dateD").val(), "dateF": $("#dateF").val()},
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Produit", "Ventes"]);
+                                for (var produit in result.records) {
+                                    chartData.push([produit, result.records[produit]]);
+                                }
+                                // On dessine le graphique
+                                drawChart2(chartData);
+                            },
+                    error: showError
+                });
+            }
 
-//            function doAjax3() {
-//                $.ajax({
-//                    url: "CaParZone",
-//                    data: {"dateD": $("#dateD").val(), "dateF": $("#dateF").val()},
-//                    dataType: "json",
-//                    success: // La fonction qui traite les résultats
-//                            function (result) {
-//                                // On reformate le résultat comme un tableau
-//                                var chartData = [];
-//                                // On met le descriptif des données
-//                                chartData.push(["Zone", "Ventes"]);
-//                                for (var zone in result.records) {
-//                                    chartData.push([zone, result.records[zone]]);
-//                                }
-//                                // On dessine le graphique
-//                                drawChart3(chartData);
-//                            },
-//                    error: showError
-//                });
-//            }
+            function doAjax3() {
+                $.ajax({
+                    url: "CaParZone?dateD="+$('#dateD').val()+"&dateF="+$('#dateF').val(),
+                    data: {"dateD": $("#dateD").val(), "dateF": $("#dateF").val()},
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // On reformate le résultat comme un tableau
+                                var chartData = [];
+                                // On met le descriptif des données
+                                chartData.push(["Zone", "Ventes"]);
+                                for (var zone in result.records) {
+                                    chartData.push([zone, result.records[zone]]);
+                                }
+                                // On dessine le graphique
+                                drawChart3(chartData);
+                            },
+                    error: showError
+                });
+            }
 
 //            function date() {
 //                $.ajax({
@@ -205,7 +205,7 @@
             <input type='submit' value='Rafraichir'>
         </form>
         <div id="piechart" style="width: 900px; height: 500px;"></div>
-<!--        <div id="piechart2" style="width: 900px; height: 500px;"></div>
-        <div id="piechart3" style="width: 900px; height: 500px;"></div>-->
+        <div id="piechart2" style="width: 900px; height: 500px;"></div>
+        <div id="piechart3" style="width: 900px; height: 500px;"></div>
     </body>
 </html>
