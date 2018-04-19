@@ -52,7 +52,7 @@ h1{
     font-family:"Roboto";
     color:white;
     font-size: 20px;
-     background: transparent;
+
 }
 
 /*Mise en page du bouton, fleche retour*/
@@ -63,3 +63,7 @@ h1{
     margin-left: 10px;
 }
 
+/*Fond bouton transparent*/
+input{
+    background: transparent;
+}
