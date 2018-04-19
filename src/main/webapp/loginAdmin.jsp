@@ -15,8 +15,8 @@
 
         <div id="form">
             <form action= "<c:url value='/' />" method="POST">
-                Identifiant : <input name='loginParam' placeholder="Ex : untel" id="input"><br>
-                Mot de passe : <input name='passwordParam' placeholder="Ex : ABCD" type='password' id="input">
+                Identifiant : <input name='loginParam' placeholder="Ex : untel" ><br>
+                Mot de passe : <input name='passwordParam' placeholder="Ex : ABCD" type='password' >
                 <input type='submit' name='action' id="button" value='Connexion'>
             </form>
             <br> </br>
