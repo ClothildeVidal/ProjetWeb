@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,16 +10,18 @@
         <link rel="stylesheet" href="css/conn-admin.css" type="text/css" media="screen" />
     </head>
     <body>
-        <h1>Connexion</h1>
+        <h1>Bonjour administrateur, <br> merci de vous authentifier</h1>
 
-<!--        <div style="color:red">${errorMessage}</div> -->
+
         <div id="form">
-            <form action= "<c:url value='/' />" method="POST"> 
-                Identifiant (untel): <input name='loginParam'><br>
-                Mot de passe (ABCD): <input name='passwordParam' type='password'><br>
-                <input type='submit' name='action' value='Connexion'>
+            <form action= "<c:url value='/' />" method="POST">
+                Identifiant : <input name='loginParam' placeholder="Ex : untel" id="input"><br>
+                Mot de passe : <input name='passwordParam' placeholder="Ex : ABCD" type='password' id="input">
+                <input type='submit' name='action' id="button" value='Connexion'>
             </form>
+            <br> </br>
         </div>
-        <p id="Retour"><a href="index.jsp">Retour</a></p>
+      <br><br>  <p id="Retour"><a href="index.jsp"><img src="images/retour.png" alt=""></a></p></br></br>
     </body>
 </html>
+

@@ -20,6 +20,6 @@
                 <input type='submit' name='action' id="button" value='Connexion'>
             </form>
         </div>
-        <p id="Retour"><a href="index.jsp"><img src="../images/retour.png" alt=""></a></p>
+        <p id="Retour"><a href="index.jsp"><img src="images/retour.png" alt=""></a></p>
     </body>
 </html>
