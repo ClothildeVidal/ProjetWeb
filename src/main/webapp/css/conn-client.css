@@ -1,41 +1,63 @@
+/*Permet de supprimer le fond blanc lors du remplissage automatique*/
+input:-webkit-autofill, input:-webkit-autofill:hover, input :-webkit-autofill:focus{
+    -webkit-text-fill-color: #fff;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
 body{
-    background-image:url("../images/conn-client.jpg");
+text-align : center;
+    background-image :  url("../images/fond.jpg");
     background-position:center top;
     background-repeat: no-repeat;
     background-size:100%;
-    width:100%;
-    height:100vh;
+    width:80%;
+    height:80vh;
     font-family:"Roboto";
-    color:#FFFFFF;
-}
+    color:#FFFFFF;}
+
+body div {
+  text-align : center;
+  background-position:center top;
+  box-shadow: 2px 1px 7px 1px #000000;}
+
+#id{
+box-shadow: 2px 1px 7px 1px #000000;}
 
 div{
     text-align:center;
     line-height:50px;
     font-size:1.5em;
     position:absolute;
+    font-family:"Roboto";
     left:10%;
-    top:40%;
-}
+    top:40%;}
 
 h1{
     text-align:center;
     font-size:3em;
+    font-family:"Roboto";
     position:absolute;
-    left:12%;
-    top:20%;
+    left:6%;
+    top:20%;}
+
+#button{
+    width:40%;
+    height:3vh;
+    font-family:"Roboto";
+    color:white;
+
+    font-size: 20px;
 }
 
-p#Retour{
-    text-decoration:none;
-    background-color:#2C3E50;
-    padding:1em;
-    border-radius:10px;
-    border:3px #FFFFFF;
-    color:#FFFFFF;
-    font-size:1em;
-    position:absolute;
-    left:80%;
-    top:80%;
 
+ #Retour{
+    position:absolute;
+    left:0%;
+    top:00%;
+    margin-left: 10px;
+}
+
+input{
+  background: transparent;
 }
