@@ -12,7 +12,7 @@
   			<nav>
   				<ul>
   					<li><a href="#plan">Plan d'accès à l'entreprise</a></li>
-  					<li><a href="#contact">Contact</a></li>
+  					<li><a href="contact.jsp">Contact</a></li>
   				</ul>
   			</nav>
   		</header>

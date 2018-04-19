@@ -8,12 +8,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<html>
+<!DOCTYPE html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
+        <title>Nos coordonnées</title>
+        <link rel="stylesheet" href="css/contact.css" type="text/css" media="screen" />
     <body>
-        <h1>Hello World!</h1>
+        <section id="Contact">
+            <section id="client">
+                <p>En cas de nécessité, vous pouvez nous joindre aux numéros suivants : </p>
+            </section>
+            <section>
+              <p><img src="images/Anais.jpg" id="photo" alt="Anais">
+              <br>  Anaïs Santos : 0684......</br>
+
+                <img src="images/Clo.jpg" id="photo"  alt="Clothilde">
+                  <br> Clothilde Vidal : 0701......</br>
+
+                <img src="images/marie.jpg" id="photo"  alt="Marie">
+                  <br> Marie Lordey : 0678......</br> </p>             
+            </section>
+        </section>
     </body>
 </html>
