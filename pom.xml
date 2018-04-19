@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion> <!-- permet de savoir quelle version de la structure de données "modèle de projet" est représentée dans le fichier XML-->
 
-    <groupId>com.mycompany</groupId>
-    <artifactId>projet</artifactId>
+    <groupId>com.mycompany</groupId> <!--permet de connaitre l'organisation qui gère le projet-->
+    <artifactId>projet</artifactId> <!-- nom-->
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -14,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <!-- Gestion des dépendances : bibliothèque dont dépend le projet-->
     <dependencies>
         <!-- <dependency>
             <groupId>com.mycompany</groupId>
