@@ -19,14 +19,20 @@
                 <p>En cas de nécessité, vous pouvez nous joindre aux numéros suivants : </p>
             </section>
             <section>
-              <p><img src="images/Anais.jpg" id="photo" alt="Anais">
-              <br>  Anaïs Santos : 0684......</br>
-
-                <img src="images/Clo.jpg" id="photo"  alt="Clothilde">
-                  <br> Clothilde Vidal : 0701......</br>
-
-                <img src="images/marie.jpg" id="photo"  alt="Marie">
-                  <br> Marie Lordey : 0678......</br> </p>             
+               <div id="images">
+                   <div class="image-container">
+                       <img src="images/Anais.jpg" id="photo" alt="Anais">
+                       <br>  Anaïs Santos : 0684......</br>
+                   </div>
+                   <div class="image-container">
+                       <img src="images/Clo.jpg" id="photo"  alt="Clothilde">
+                       <br> Clothilde Vidal : 0701......</br>
+                   </div>
+                   <div class="image-container">
+                       <img src="images/marie.jpg" id="photo"  alt="Marie">
+                       <br> Marie Lordey : 0678......</br>
+                   </div>
+               </div>          
             </section>
         </section>
     </body>

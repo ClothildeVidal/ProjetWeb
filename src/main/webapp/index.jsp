@@ -11,7 +11,7 @@
   			<h1><img src="images/Logo.PNG" alt=""></h1>
   			<nav>
   				<ul>
-  					<li><a href="#plan">Plan d'accès à l'entreprise</a></li>
+  					<li><a href="carte.jsp">Plan d'accès à l'entreprise</a></li>
   					<li><a href="contact.jsp">Contact</a></li>
   				</ul>
   			</nav>
