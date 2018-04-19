@@ -24,12 +24,12 @@ public class CaParProduit extends HttpServlet {
             throws ServletException, IOException, SQLException, DAOException {
         String dateD = request.getParameter("dateD");
         String dateF = request.getParameter("dateF");
-       
+
         if (dateD == null || dateF == null) {
             dateD = "2011-01-01";
             dateF = "2018-08-01";
         }
-        
+
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         // Properties est une Map<clé, valeur> pratique pour générer du JSON
         Properties resultat = new Properties();
@@ -71,13 +71,3 @@ public class CaParProduit extends HttpServlet {
         }
     }
 }
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-//    @Override
-//    public String getServletInfo() {
-//        return "Short description";
-//    }

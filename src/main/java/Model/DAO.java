@@ -332,7 +332,7 @@ public class DAO {
             stmt.setString(2, dateF);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
-                    // On récupère les champs nécessaires de l'enregistrement courant
+                    // On récupère les champs nécessaires de l'enregistrement courant 
                     String name = rs.getString("NAME");
                     double sales = rs.getDouble("SALES");
                     // On l'ajoute à la liste des résultats

@@ -32,7 +32,9 @@ public class CaParClient extends HttpServlet {
         DAO dao = new DAO(DataSourceFactory.getDataSource());
         // Properties est une Map<clé, valeur> pratique pour générer du JSON
         Properties resultat = new Properties();
-        resultat.put("records", dao.CaParClient(dateD, dateF));
+        
+        //appel mon DAO
+        resultat.put("records", dao.CaParClient(dateD, dateF)); 
 
         try (PrintWriter out = response.getWriter()) {
             // On spécifie que la servlet va générer du JSON
