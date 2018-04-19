@@ -7,22 +7,24 @@ body{
     height:100vh;
 }
 
-
+/*Mise en page des photos*/
 #photo {
   background-repeat: no-repeat;
   width: 300px;
-	height: 300px;
+ height: 300px;
   text-align: justify;
 }
+
 
 .image-container{
     display : inline-block;
 }
-
+/*Mise en page du block de photo*/
 #images{
     text-align : center;
 }
 
+/*Mise en page du texte*/
 #client {
   font-family: Courier, monospace;
     text-transform : uppercase;

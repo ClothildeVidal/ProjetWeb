@@ -10,7 +10,7 @@ html{
     background-size: cover;
 }
 
-/*Mise en page du body*/
+/*Mise en page du corps de la page*/
 body{
     text-align : center;
     width:80%;
@@ -18,15 +18,11 @@ body{
     font-family:"Roboto";
     color:#FFFFFF;}
 
+/*Mise en page du fomulaire*/
 body div {
-  text-align : center;
-  background-position:center top;
-  box-shadow: 2px 1px 7px 1px #000000;}
-
-#id{
-box-shadow: 2px 1px 7px 1px #000000;}
-
-div{
+    text-align : center;
+    background-position:center top;
+    box-shadow: 2px 1px 7px 1px #000000;
     text-align:center;
     line-height:50px;
     font-size:1.5em;
@@ -35,6 +31,12 @@ div{
     left:10%;
     top:40%;}
 
+
+#id{
+    box-shadow: 2px 1px 7px 1px #000000;}
+
+
+/*Mise en page des titres 1*/
 h1{
     text-align:center;
     font-size:3em;
@@ -43,22 +45,21 @@ h1{
     left:6%;
     top:20%;}
 
+/*Mise en page du bouton connexion*/
 #button{
     width:40%;
     height:3vh;
     font-family:"Roboto";
     color:white;
     font-size: 20px;
+     background: transparent;
 }
 
-
- #Retour{
+/*Mise en page du bouton, fleche retour*/
+#Retour{
     position:absolute;
     left:0%;
     top:00%;
     margin-left: 10px;
 }
 
-input{
-  background: transparent;
-}

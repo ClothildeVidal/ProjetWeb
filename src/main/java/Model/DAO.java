@@ -169,7 +169,6 @@ public class DAO {
         }
         return result;
     }*/
-
     public int deleteCustomer(int customerId) throws DAOException {
 
         // Une requête SQL paramétrée
@@ -205,7 +204,7 @@ public class DAO {
         }
         return result;
     }
-    
+
     public int deleteCommande(int orderID) throws SQLException {
         int result = 0;
         String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
@@ -284,10 +283,10 @@ public class DAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
                     // On récupère les champs nécessaires de l'enregistrement courant
-                String produit = rs.getString("PRODUCT_CODE");
-                double sales = rs.getDouble("SALES");
-                // On l'ajoute à la liste des résultats
-                result.put(produit, sales);
+                    String produit = rs.getString("PRODUCT_CODE");
+                    double sales = rs.getDouble("SALES");
+                    // On l'ajoute à la liste des résultats
+                    result.put(produit, sales);
                 } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {
@@ -297,7 +296,7 @@ public class DAO {
 
         return result;
     }
-            
+
     public Map<String, Double> CaParZone(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT STATE, SUM(SHIPPING_COST * QUANTITY) AS SALES FROM APP.CUSTOMER c INNER JOIN APP.PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID) WHERE SALES_DATE BETWEEN ? AND ? GROUP BY STATE";
@@ -309,10 +308,10 @@ public class DAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
                     // On récupère les champs nécessaires de l'enregistrement courant
-                String zone = rs.getString("STATE");
-                double sales = rs.getDouble("SALES");
-                // On l'ajoute à la liste des résultats
-                result.put(zone, sales);
+                    String zone = rs.getString("STATE");
+                    double sales = rs.getDouble("SALES");
+                    // On l'ajoute à la liste des résultats
+                    result.put(zone, sales);
                 } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {
@@ -322,7 +321,6 @@ public class DAO {
 
         return result;
     }
-
 
     public Map<String, Double> CaParClient(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
@@ -335,10 +333,10 @@ public class DAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
                     // On récupère les champs nécessaires de l'enregistrement courant
-                String name = rs.getString("NAME");
-                double sales = rs.getDouble("SALES");
-                // On l'ajoute à la liste des résultats
-                result.put(name, sales);
+                    String name = rs.getString("NAME");
+                    double sales = rs.getDouble("SALES");
+                    // On l'ajoute à la liste des résultats
+                    result.put(name, sales);
                 } // else on n'a pas trouvé, on renverra null
             }
         } catch (SQLException ex) {

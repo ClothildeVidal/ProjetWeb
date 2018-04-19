@@ -78,6 +78,7 @@ nav ul{
 nav ul li{
   display: inline-block;
   list-style: none;
+  margin-left: 80px;
   border-right: 1px solid grey;
 }
 

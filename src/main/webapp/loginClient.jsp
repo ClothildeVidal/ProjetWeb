@@ -9,10 +9,8 @@
         <link rel="stylesheet" href="css/conn-client.css" type="text/css" media="screen" />
     </head>
     <body>
-        
-        <h1>Bonjour client, <br> Veuillez vous authentifier</h1>
 
-<!--        <div style="color:red">${errorMessage}</div> -->
+        <h1>Bonjour client, <br> Veuillez vous authentifier</h1>
         <div id="form">
             <form action="<c:url value="/" />" method="POST"><!-- l'action par défaut est l'URL courant, qui va rappeler la servlet -->
                 Identifiant : <input name='loginParamC' placeholder="Ex : jumboeagle@example.com"><br>

@@ -6,6 +6,8 @@
 <html>
   <head>
       <meta charset="utf-8">
+      <title>Situation</title>
+      <link rel="stylesheet" href="css/carte.css" type="text/css" media="screen" />
     <style>
        #map {
         height: 400px;
@@ -14,7 +16,8 @@
     </style>
   </head>
   <body>
-    <h3>Castres</h3>
+      <h3>Vous pouvez nous joindre à l'adresse suivante :  </h3>
+      <h3>Rue firmin Oulès,<br> 81100 Castres</h3>
     <div id="map"></div>
     <script>
       function initMap() {
