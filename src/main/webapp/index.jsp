@@ -5,6 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Bienvenue</title>
+        <meta name="view port" content="width=device-width;inital-scale=1.0">
         <link rel="stylesheet" href="css/accueil.css" type="text/css" media="screen" />
     <body>
       <header>

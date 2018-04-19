@@ -3,14 +3,16 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input :-webkit-autofill:fo
     -webkit-text-fill-color: #fff;
     transition: background-color 5000s ease-in-out 0s;
 }
-
-
-body{
-text-align : center;
+/*Definition du fond*/
+html{ 
     background-image :  url("../images/fond.jpg");
-    background-position:center top;
     background-repeat: no-repeat;
-    background-size:100%;
+    background-size: cover;
+}
+
+/*Mise en page du body*/
+body{
+    text-align : center;
     width:80%;
     height:80vh;
     font-family:"Roboto";

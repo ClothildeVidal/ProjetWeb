@@ -4,11 +4,19 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input :-webkit-autofill:fo
     transition: background-color 5000s ease-in-out 0s;
 }
 
-body{
+/*Definition du fond*/
+html{
     background-image:url("../images/fond-admin.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+/*Mise en page du body*/
+body{
     padding: 0;
     margin:0;
-    background-size: cover;
+
 
 }
 div{
