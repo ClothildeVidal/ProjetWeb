@@ -315,14 +315,14 @@ public class DAO {
 
     public Map<String, Double> CaParClient(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID) WHERE TO_CHAR(SALES_DATE) BETWEEN ? AND ? GROUP BY NAME";
+        String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM CUSTOMER c INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID) WHERE SALES_DATE BETWEEN ? AND ? GROUP BY NAME";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setString(1, dateD);
             stmt.setString(2, dateF);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) { // On a trouvé
+                while (rs.next()) { // On a trouvé
                     // On récupère les champs nécessaires de l'enregistrement courant
                 String name = rs.getString("NAME");
                 double sales = rs.getDouble("SALES");
