@@ -20,8 +20,7 @@
             google.charts.load('current', {'packages':['corechart']});
             //google.load("visualization", "1", {packages: ["corechart", 'controls']});
             $(document).ready(// Exécuté à la fin du chargement de la page
-                    function () {
-                        console.log("coucou");
+                    function () {                     
                         $('#graphique').submit(affichage);
 
                         //google.load("visualization", "1", {packages: ["corechart", 'controls']});
