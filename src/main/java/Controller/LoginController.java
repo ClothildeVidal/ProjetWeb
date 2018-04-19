@@ -27,18 +27,22 @@ public class LoginController extends HttpServlet {
         String action = request.getParameter("action");
         if (null != action) {
             switch (action) {
+                //Quand on utilise le bouton Connexion
                 case "Connexion":
+                    //On appelle checkLoginAdmin, si l'utilisateur est bien un admin il est connecté
                     if (checkLoginAdmin(request)) {
                         isAdmin = true;
                         String userName = findUserInSession(request);
                         break;
                     }
+                    //On appelle checkLoginClient, si l'utilisateur est bien un client il est connecté
                     if (checkLoginClient(request)) {
                         isClient = true;
                         String userName = findUserInSession(request);
                         break;
                     }
                 case "Deconnexion":
+                    //Quand on appuie sur le bouton déconnexion
                     if (doLogout(request)) {
                         isAdmin = false;
                         isClient = false;
@@ -48,14 +52,17 @@ public class LoginController extends HttpServlet {
         }
         
         String jspView;
-
+        //si l'utilisateur n'est ni client ni admin
         if (isClient == false && isAdmin == false) { // L'utilisateur n'est pas connecté
-            // On choisit la page de login
+            // On renvoit la page d'accueil
             jspView = "index.jsp";
         } else {
+            //utilisateur est un admin
             if (isAdmin) {
+                //on renvoit sur la page admin
                 jspView = "admin.jsp";
             } else {
+                //l'utilisateur est un client on envoit sur la page du client
                 jspView = "client.jsp";
             }
         }

@@ -21,6 +21,7 @@ public class DAO {
         this.myDataSource = dataSource;
     }
 
+    //liste des clients
     public List<CustomerEntity> allCustomers() throws SQLException {
 
         List<CustomerEntity> result = new LinkedList<>();
@@ -63,6 +64,7 @@ public class DAO {
         return result;
     }
 
+    //la liste des commandes
     public List<Commandes> commandesParClient(String email) throws SQLException {
         List<Commandes> result = new LinkedList<>();
         // Une requête SQL paramétrée
@@ -72,7 +74,7 @@ public class DAO {
             stmt.setString(1, email);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    // On récupère les champs nécessaires de l'enregistrement courant
+                    // On récupère les champs suivants
                     int OrderNum = rs.getInt("order_num");
                     int produitId = rs.getInt("product_id");
                     int quantite = rs.getInt("quantity");
@@ -112,32 +114,6 @@ public class DAO {
     }
 
     /**
-     * Ajout d'un enregistrement dans la table CUSTOMER
-     *
-     * @param code le code (non null)
-     * @param rate le taux (positive or 0)
-     * @return 1 si succès, 0 sinon
-     * @throws SQLException renvoyées par JDBC
-     */
-//	public int addCustomer(int id, String email) throws SQLException {
-//		int result = 0;
-//		String sql = "INSERT INTO CUSTOMER VALUES (?, ?)";
-//		try (Connection connection = myDataSource.getConnection(); 
-//		     PreparedStatement stmt = connection.prepareStatement(sql)) {
-//			stmt.setInt(1, id);
-//			stmt.setString(2, email);
-//			result = stmt.executeUpdate();
-//		}
-//		return result;
-//	}
-    /**
-     * Detruire un enregistrement dans la table CUSTOMER
-     *
-     * @param customerId la clé du client à détruire
-     * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
-     * @throws DAOException
-     */
-    /**
      * Ajout d'un enregistrement dans la table DISCOUNT_CODE
      *
      * @param code le code (non null)
@@ -157,18 +133,6 @@ public class DAO {
         return result;
     }
 
-    /*
-    public String addProduct(String description, float prix) throws SQLException {
-        String result = null;
-        String sql = "INSERT INTO PURCHASE_ORDER VALUES (?, ?, ?, ?)";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, code);
-            stmt.setFloat(2, rate);
-            result = stmt.executeUpdate();
-        }
-        return result;
-    }*/
     public int deleteCustomer(int customerId) throws DAOException {
 
         // Une requête SQL paramétrée
@@ -272,12 +236,12 @@ public class DAO {
         return result;
     }
 
+    //Map est un objet qui staocke les données sous forme de clé/paire
     public Map<String, Double> CaParProduit(String dateD, String dateF) throws DAOException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT PRODUCT_CODE, SUM(PURCHASE_COST * QUANTITY) AS SALES FROM PRODUCT c INNER JOIN PURCHASE_ORDER o ON (c.PRODUCT_ID = o.PRODUCT_ID) WHERE SALES_DATE BETWEEN ? AND ? GROUP BY PRODUCT_CODE";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-
             stmt.setString(1, dateD);
             stmt.setString(2, dateF);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -332,7 +296,7 @@ public class DAO {
             stmt.setString(2, dateF);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) { // On a trouvé
-                    // On récupère les champs nécessaires de l'enregistrement courant 
+                    // On récupère les champs nécessaires 
                     String name = rs.getString("NAME");
                     double sales = rs.getDouble("SALES");
                     // On l'ajoute à la liste des résultats

@@ -8,59 +8,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<!--        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        On charge jQuery 
-        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        On charge le moteur de template mustache https://mustache.github.io/ 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-         On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable 
-        <script type="text/javascript" 	src="javascript/jquery.jsontotable.min.js"></script>-->
+
         <script>
-            //google.charts.load('current', {'packages': ['corechart']});
             google.charts.load('current', {'packages':['corechart']});
-            //google.load("visualization", "1", {packages: ["corechart", 'controls']});
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {                     
                         $('#graphique').submit(affichage);
-
-                        //google.load("visualization", "1", {packages: ["corechart", 'controls']});
+                        //La fonction s'exécute quand on appuie sur le bouton Afficher
 
                     }
             );
 
 
             google.setOnLoadCallback(affichage);
-//            google.setOnLoadCallback(doAjax2);
-//            google.setOnLoadCallback(doAjax3);
-//            function drawDashboard() {
-//
-//                var data = google.visualization.arrayToDataTable(dataArray);
-//                var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
-//                var rangeSlider = new google.visualization.ControlWrapper({
-//                    'controlType': 'DateRangeFilter',
-//                    'containerId': 'filter_div',
-//                    'option': {
-//                        'filterColumnLabel': 'Période'
-//                    }
-//                });
-//
-//                var options = {'title': 'Chiffre d\'affaires par client'};
-//                var pieChart = new google.visualization.ChartWrapper({
-//                    'chartType': 'PieChart',
-//                    'containerId': 'chart_div',
-//                    'options': {
-//                        'width': 300,
-//                        'height': 300,
-//                        'pieSliceText': 'value',
-//                        'legend': 'right'
-//                    }
-//                });
-//                dashboard.bind(donutRangeSlider, pieChart);
-//
-//                // Draw the dashboard.
-//                dashboard.draw(data);
-//                chart.draw(data, options);
-//            }
+
 
             function affichage(event) {
                 event.preventDefault();
@@ -99,6 +60,7 @@
                 $.ajax({
                     url: "CaParClient?dateD="+$('#dateD').val()+"&dateF="+$('#dateF').val(),
                     data: $('#graphique').serialize(),
+                    //On récupère les dates passées en paramètres
                     dataType: "json",
                     success: // La fonction qui traite les résultats
                             function (result) {
@@ -120,6 +82,7 @@
                 $.ajax({
                     url: "CaParProduit?dateD="+$('#dateD').val()+"&dateF="+$('#dateF').val(),
                     data: {"dateD": $("#dateD").val(), "dateF": $("#dateF").val()},
+                    //On récupère les dates passées en paramètres
                     dataType: "json",
                     success: // La fonction qui traite les résultats
                             function (result) {
@@ -141,13 +104,15 @@
                 $.ajax({
                     url: "CaParZone?dateD="+$('#dateD').val()+"&dateF="+$('#dateF').val(),
                     data: {"dateD": $("#dateD").val(), "dateF": $("#dateF").val()},
+                    //On récupère les dates passées en paramètres
                     dataType: "json",
                     success: // La fonction qui traite les résultats
                             function (result) {
-                                // On reformate le résultat comme un tableau
+                                // On initialise un tableau pour y mettre les données
                                 var chartData = [];
                                 // On met le descriptif des données
                                 chartData.push(["Zone", "Ventes"]);
+                                // On récupère les données
                                 for (var zone in result.records) {
                                     chartData.push([zone, result.records[zone]]);
                                 }
@@ -157,29 +122,8 @@
                     error: showError
                 });
             }
-
-//            function date() {
-//                $.ajax({
-//                    url: "CaParZone",
-//                    dataType: "json",
-//                    success:
-//                            function (result) {
-//                                // On reformate le résultat comme un tableau
-//                                var chartData = [];
-//                                // On met le descriptif des données
-//                                chartData.push(["Zone", "Ventes"]);
-//                                for (var zone in result.records) {
-//                                    chartData.push([zone, result.records[zone]]);
-//                                }
-//                                // On dessine le graphique
-//                                drawChart3(chartData);
-//                            },
-//                    error: showError
-//                })
-//            }
+            
             // Fonction qui traite les erreurs de la requête
-
-
             function showError(xhr, status, message) {
                 alert("Erreur: " + status + " : " + message);
             }
@@ -200,7 +144,7 @@
         <form id="graphique">
             <input type="date" name="dateD" id="dateD">
             <input type="date" name="dateF" id="dateF">
-            <input type='submit' value='Rafraichir'>
+            <input type='submit' value='Afficher'>
         </form>
         <div id="piechart" style="width: 900px; height: 500px;"></div>
         <div id="piechart2" style="width: 900px; height: 500px;"></div>

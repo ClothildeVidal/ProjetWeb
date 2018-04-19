@@ -14,11 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import Model.DAO;
 import Model.DataSourceFactory;
 
-/**
- *
- * @author rbastide
- */
+
 @WebServlet(name = "addProduct", urlPatterns = {"/addProduct"})
+//servlet de type httpServlet 
 public class AddProductJsonServlet extends HttpServlet {
 
 	/**
@@ -52,6 +50,7 @@ public class AddProductJsonServlet extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 			// Générer du JSON
 			Gson gson = new Gson();
+                        //données de la forme json
 			out.println(gson.toJson(resultat));
 		}
 	}
@@ -65,6 +64,7 @@ public class AddProductJsonServlet extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
+        //analyse les paramètres de la requête et écrit réponse
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
@@ -79,6 +79,8 @@ public class AddProductJsonServlet extends HttpServlet {
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
 	 */
+        
+        //recueille les paramètres pour les traiter et générer la réponse
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {

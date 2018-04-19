@@ -1,9 +1,6 @@
 package Model;
 
-/**
- * Un enregistrement de la table DISCOUNT_CODE
- * @author rbastide
- */
+
 public class DiscountCode {
 
 	private String discountCode;

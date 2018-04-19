@@ -10,7 +10,7 @@
         <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <!--On charge le moteur de template mustache https://mustache.github.io/--> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-         <!--On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable--> 
+        <!--On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable--> 
         <script type="text/javascript" 	src="javascript/jquery.jsontotable.min.js"></script>
         <script>
             $(document).ready(// Exécuté à la fin du chargement de la page
@@ -27,6 +27,7 @@
                 // On fait un appel AJAX pour chercher les produits existants
                 $.ajax({
                     url: "allProduits",
+                    //url de la servlet ListProduitsJsonServlet
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -47,6 +48,7 @@
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
                     url: "allProduits",
+                    //url de la servlet ListProduitsJsonServlet
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -65,31 +67,28 @@
                 var name = "${userName}";
                 $.ajax({
                     url: "ListeCommandes",
+                    //url de la servlet ListeCommandes
                     data: {"userName": name},
+                    //on récupère le nom d'utilisateur
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
-                            /*function (result) {
-                             $("#commandes").empty();
-                             // On convertit les enregistrements en table HTML
-                             $.jsontotable(result.records, {id: "#commandes", header: false});
-                             }*/
-                                    function (result) {
-                                        // Le code source du template est dans la page
-                                        var template = $('#codesTemplate').html();
-                                        // On combine le template avec le résultat de la requête
-                                        var processedTemplate = Mustache.to_html(template, result);
-                                        // On affiche la liste des options dans le select
-                                        $('#codes').html(processedTemplate);
-                                    }
-
-                        });
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#codesTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#codes').html(processedTemplate);
+                            }
+                });
             }
 
             function listProduits() {
                 // On fait un appel AJAX pour chercher les codes
                 $.ajax({
                     url: "ProductForm",
+                    //url de la servlet ProductForm
                     dataType: "json",
                     error: showError,
                     success: // La fonction qui traite les résultats
@@ -103,10 +102,11 @@
                             }
                 });
             }
-            // Ajouter un code
+            // Ajouter un produit
             function addProduct() {
                 $.ajax({
                     url: "addProduct",
+                    //url de la servlet AddProductJsonServlet
                     // serialize() renvoie tous les paramètres saisis dans le formulaire
                     data: $("#codeForm").serialize(),
                     dataType: "json",
@@ -119,39 +119,6 @@
                 });
                 return false;
             }
-
-//            // Supprimer un code
-//            function deleteCode(code) {
-//                $.ajax({
-//                    url: "deleteCommande",
-//                    data: orderID = table.getValueAt(table.getSelectedRow(),1).toString(),
-//                    dataType: "json",
-//                    success:
-//                            console.log(orderID);
-//                            function (result) {
-//                                showCommandes();
-//                                console.log(result);
-//                            },
-//                    error: showError
-//                });
-//                return false;
-//            }
-
-//            // Modifier un code
-//            function modifierCode(code) {
-//                $.ajax({
-//                    url: "deleteCode",
-//                    data: {"code": code},
-//                    dataType: "json",
-//                    success:
-//                            function (result) {
-//                                showCodes();
-//                                console.log(result);
-//                            },
-//                    error: showError
-//                });
-//                return false;
-//            }
 
             // Fonction qui traite les erreurs de la requête
             function showError(xhr, status, message) {
@@ -216,19 +183,19 @@
     <div id="codes"></div>
     <!--Le template qui sert à formatter la liste des codes--> 
     <script id="codesTemplate" type="text/template">
-            <TABLE id="table">
-            <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
-            {{! Pour chaque enregistrement }}
-            {{#records}}
-            {{! Une ligne dans la table }}
-    <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCode('{{orderID}}')" id="supp">Supprimer</button></TD><TD><button onclick="modifierCode('{{orderID}}')" id="modif">Modifier</button></TD></TR>
-    {{/r    ecords}}
-            </TABLE>
-        </script>
-        <div id="commandes"></div>
-            <form action="<c:url value='/'/>" method="POST"> 
-    <input type='submit' name='action' value='Deconnexion'>
-</form>
+        <TABLE id="table">
+        <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
+        {{! Pour chaque enregistrement }}
+        {{#records}}
+        {{! Une ligne dans la table }}
+        <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCode('{{orderID}}')" id="supp">Supprimer</button></TD><TD><button onclick="modifierCode('{{orderID}}')" id="modif">Modifier</button></TD></TR>
+        {{/r    ecords}}
+        </TABLE>
+    </script>
+    <div id="commandes"></div>
+    <form action="<c:url value='/'/>" method="POST"> 
+        <input type='submit' name='action' value='Deconnexion'>
+    </form>
 <li>
     <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a></br>
     <a href="ListeCommandes">ListeCommandes Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>
