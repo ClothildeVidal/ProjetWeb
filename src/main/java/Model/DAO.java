@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
+import java.util.Date;
 
 public class DAO {
 
@@ -128,6 +130,44 @@ public class DAO {
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, code);
             stmt.setFloat(2, rate);
+            result = stmt.executeUpdate();
+        }
+        return result;
+    }
+
+    public int idDescription(String desc) throws SQLException {
+        int result = 0;
+        String sql = "SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, desc);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("PRODUCT_ID");
+                    result = id;
+                }
+            }
+        }
+        return result;
+    }
+
+    public int addCommande(String desc, int qte, int userID) throws SQLException {
+        int result = 0;
+        String sql = "INSERT INTO PURCHASE_ORDER VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            // on crée l'objet en passant en paramétre une chaîne representant le format 
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//récupération de la date courante 
+            Date currentTime_1 = new Date();
+//on crée la chaîne à partir de la date  
+            String dateString = formatter.format(currentTime_1);
+            stmt.setInt(1, (30298005 + (int) (Math.random() * (99999999 - 30298005))));
+            stmt.setInt(2, userID);
+            stmt.setInt(3, idDescription(desc));
+            stmt.setInt(4, qte);
+            stmt.setFloat(5, qte);
+            stmt.setString(6, dateString);
             result = stmt.executeUpdate();
         }
         return result;

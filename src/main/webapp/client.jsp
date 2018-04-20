@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -13,8 +13,9 @@
         <!--On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable--> 
         <script type="text/javascript" 	src="javascript/jquery.jsontotable.min.js"></script>
         <script>
-            $(document).ready(// Exécuté à la fin du chargement de la page
+            $(document).ready(// ExÃ©cutÃ© Ã  la fin du chargement de la page
                     function () {
+                       $('#newCommande').submit(affichageComm);
                         listProduits();
 //                        fillProductSelector();
 //                        showProduits();
@@ -23,6 +24,12 @@
                     }
             );
 
+            function affichageComm(event) {
+                event.preventDefault();
+                addProduct();
+                console.log("lala");
+            }
+
             function fillProductSelector() {
                 // On fait un appel AJAX pour chercher les produits existants
                 $.ajax({
@@ -30,11 +37,11 @@
                     //url de la servlet ListProduitsJsonServlet
                     dataType: "json",
                     error: showError,
-                    success: // La fonction qui traite les résultats
+                    success: // La fonction qui traite les rÃ©sultats
                             function (result) {
                                 // Le code source du template est dans la page
                                 var template = $('#selectTemplate').html();
-                                // On combine le template avec le résultat de la requête
+                                // On combine le template avec le rÃ©sultat de la requÃªte
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
                                 $('#product').html(processedTemplate);
@@ -51,11 +58,11 @@
                     //url de la servlet ListProduitsJsonServlet
                     dataType: "json",
                     error: showError,
-                    success: // La fonction qui traite les résultats
+                    success: // La fonction qui traite les rÃ©sultats
                             function (result) {
                                 // Le code source du template est dans la page
                                 var template = $('#ProduitsTemplate').html();
-                                // On combine le template avec le résultat de la requête
+                                // On combine le template avec le rÃ©sultat de la requÃªte
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
                                 $('#produits').html(processedTemplate);
@@ -69,14 +76,14 @@
                     url: "ListeCommandes",
                     //url de la servlet ListeCommandes
                     data: {"userName": name},
-                    //on récupère le nom d'utilisateur
+                    //on rÃ©cupÃ¨re le nom d'utilisateur
                     dataType: "json",
                     error: showError,
-                    success: // La fonction qui traite les résultats
+                    success: // La fonction qui traite les rÃ©sultats
                             function (result) {
                                 // Le code source du template est dans la page
                                 var template = $('#codesTemplate').html();
-                                // On combine le template avec le résultat de la requête
+                                // On combine le template avec le rÃ©sultat de la requÃªte
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
                                 $('#codes').html(processedTemplate);
@@ -91,11 +98,11 @@
                     //url de la servlet ProductForm
                     dataType: "json",
                     error: showError,
-                    success: // La fonction qui traite les résultats
+                    success: // La fonction qui traite les rÃ©sultats
                             function (result) {
                                 // Le code source du template est dans la page
                                 var template = $('#listProdTemplate').html();
-                                // On combine le template avec le résultat de la requête
+                                // On combine le template avec le rÃ©sultat de la requÃªte
                                 var processedTemplate = Mustache.to_html(template, result);
                                 // On affiche la liste des options dans le select
                                 $('#choixProduct').html(processedTemplate);
@@ -104,15 +111,15 @@
             }
             // Ajouter un produit
             function addProduct() {
+                var id = "${userID}";
                 $.ajax({
                     url: "addProduct",
                     //url de la servlet AddProductJsonServlet
-                    // serialize() renvoie tous les paramètres saisis dans le formulaire
-                    data: $("#codeForm").serialize(),
+                    data: {"produit":'#product'.value, "qte":'#taux'.value, "userID": id},
                     dataType: "json",
-                    success: // La fonction qui traite les résultats
+                    success: // La fonction qui traite les rÃ©sultats
                             function (result) {
-                                showCodes();
+                                showCommandes();
                                 console.log(result);
                             },
                     error: showError
@@ -120,7 +127,23 @@
                 return false;
             }
 
-            // Fonction qui traite les erreurs de la requête
+            function deleteCommande(orderNum) {
+                $.ajax({
+                    url: "deleteCommande",
+                    //url de la servlet AddProductJsonServlet
+                    data: {"orderNum": orderNum},
+                    dataType: "json",
+                    success: // La fonction qui traite les rÃ©sultats
+                            function (result) {
+                                showCommandes();
+                                console.log(result);
+                            },
+                    error: showError
+                });
+                return false;
+            }
+
+            // Fonction qui traite les erreurs de la requÃªte
             function showError(xhr, status, message) {
                 alert(JSON.parse(xhr.responseText).message);
             }
@@ -145,17 +168,19 @@
             </select>
             </FORM>
         </script>
-        <fieldset><legend>Ajout d'un produit à la commande</legend>
-            <!--                <form>
-                                <label for="product">Produit :</label>-->
-            <!--<select id="product">-->
-            <div id="choixProduct"></div>
-            <!--</select>-->
-            <!--</form>-->
-            <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
-            Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
-            <input type="submit" value="Ajouter">
-        </fieldset>
+        <form id="newCommande">
+            <fieldset><legend>Ajout d'un produit à la commande</legend>
+                <!--                <form>
+                                    <label for="product">Produit :</label>-->
+                <!--<select id="product">-->
+                <div id="choixProduct"></div>
+                <!--</select>-->
+                <!--</form>-->
+                <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
+                Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
+                <input type="submit" value="Ajouter">
+            </fieldset>
+        </form>
     </form>
     <h3>Produits sélectionnés</h3>
     <div id="produits"></div>
@@ -163,12 +188,12 @@
                                     {{! Pour chaque produit dans le tableau}}
                                     {{#records}}
                                             {{! Une option dans le select }}
-                                            {{! le point représente la valeur courante du tableau }}
+                                            {{! le point reprÃ©sente la valeur courante du tableau }}
                                             <OPTION VALUE="{{.}}">{{.}}</OPTION>
                                     {{/records}}
                             </TABLE>
             </script>
-            Le template qui sert à formatter la liste des codes 
+            Le template qui sert Ã  formatter la liste des codes 
             <script id="produitsTemplate" type="text/template">
                 <TABLE>
                 <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
@@ -181,21 +206,21 @@
             </script>-->
     <h2>Anciennes commandes</h2>
     <div id="codes"></div>
-    <!--Le template qui sert à formatter la liste des codes--> 
+    <!--Le template qui sert Ã  formatter la liste des codes--> 
     <script id="codesTemplate" type="text/template">
         <TABLE id="table">
         <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
         {{! Pour chaque enregistrement }}
         {{#records}}
         {{! Une ligne dans la table }}
-        <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCode('{{orderID}}')" id="supp">Supprimer</button></TD><TD><button onclick="modifierCode('{{orderID}}')" id="modif">Modifier</button></TD></TR>
-        {{/r    ecords}}
+        <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD><TD><button onclick="deleteCommande('{{orderID}}')">Supprimer</button></TD><TD><button onclick="modifierCode('{{orderID}}')" id="modif">Modifier</button></TD></TR>
+        {{/records}}
         </TABLE>
     </script>
     <div id="commandes"></div>
     <form action="<c:url value='/'/>" method="POST"> 
-        <input type='submit' name='action' value='Deconnexion'>
-    </form>
+    <input type='submit' name='action' value='Deconnexion'>
+</form>
 <li>
     <a href="ProductForm">ProductForm Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a></br>
     <a href="ListeCommandes">ListeCommandes Une servlet qui génère un formulaire de saisie pour la servlet ci-dessus</a>

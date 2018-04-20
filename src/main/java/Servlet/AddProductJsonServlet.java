@@ -31,12 +31,15 @@ public class AddProductJsonServlet extends HttpServlet {
 		throws ServletException, IOException {
 
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
-		String code = request.getParameter("code");
-		String taux = request.getParameter("taux");
+		String desc = request.getParameter("produit");
+		String qteS = request.getParameter("qte");
+                int qte = Integer.parseInt(qteS);
+                String IDS = request.getParameter("userID");
+                int ID = Integer.parseInt(IDS);
 		String message;
 		try {
-			dao.addDiscountCode(code, Float.valueOf(taux));
-			message = String.format("Code %s ajouté", code);
+			dao.addCommande(desc, qte, ID);
+			message = String.format("Commande %s ajoutée", desc);
 		} catch (NumberFormatException | SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			message = ex.getMessage();

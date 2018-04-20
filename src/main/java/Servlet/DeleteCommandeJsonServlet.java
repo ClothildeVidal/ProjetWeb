@@ -36,7 +36,7 @@ public class DeleteCommandeJsonServlet extends HttpServlet {
 		throws ServletException, IOException, SQLException {
 		// Créér le DAO avec sa source de données
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
-		String orderIDs = request.getParameter("orderID");
+		String orderIDs = request.getParameter("orderNum");
                 int orderIDi = Integer.parseInt(orderIDs);
 		String message;
 		try {

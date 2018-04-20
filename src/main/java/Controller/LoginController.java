@@ -115,6 +115,7 @@ public class LoginController extends HttpServlet {
             //  if (Integer.toString(client.getCustomerId()).equals(passwordParamC) && client.getEmail().equals(passwordParamC)) {
             HttpSession session = request.getSession(true); // démarre la session
             session.setAttribute("userName", loginParamC);
+            session.setAttribute("userID", passwordParamC);
             result = true;
         } else {
             request.setAttribute("errorMessage", "Login/Password incorrect");
