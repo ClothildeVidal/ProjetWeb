@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Model.DAO;
 import Model.DataSourceFactory;
+import java.net.URLDecoder;
 
 
 @WebServlet(name = "addProduct", urlPatterns = {"/addProduct"})
@@ -31,15 +32,16 @@ public class AddProductJsonServlet extends HttpServlet {
 		throws ServletException, IOException {
 
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
-		String desc = request.getParameter("produit");
+		String prodIDS = request.getParameter("produitID");
+                int prodID = Integer.parseInt(prodIDS);
 		String qteS = request.getParameter("qte");
                 int qte = Integer.parseInt(qteS);
                 String IDS = request.getParameter("userID");
                 int ID = Integer.parseInt(IDS);
 		String message;
 		try {
-			dao.addCommande(desc, qte, ID);
-			message = String.format("Commande %s ajoutée", desc);
+			dao.addCommande(prodID, qte, ID);
+			message = String.format("Commande %s ajoutée", prodID);
 		} catch (NumberFormatException | SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			message = ex.getMessage();

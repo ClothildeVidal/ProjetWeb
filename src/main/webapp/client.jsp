@@ -70,10 +70,11 @@
             // Ajouter un produit
             function addProduct() {
                 var id = "${userID}";
+
                 $.ajax({
-                    url: "addProduct",
+                    url: "addProduct?produitID="+$('#choixProduct').val()+"&qte="+$('#taux').val(),
                     //url de la servlet AddProductJsonServlet
-                    data: {"produit":'#product'.value, "qte":'#taux'.value, "userID": id},
+                    data: {"produitID":'#choixProduct'.value, "qte":'#taux'.value, "userID": id},
                     dataType: "json",
                     success: // La fonction qui traite les rÃ©sultats
                             function (result) {
@@ -121,7 +122,7 @@
             {{! Pour chaque enregistrement }}
             {{#records}}
             {{! Une ligne dans la table }}
-            <option value="{{.}}">{{.}}</option>
+            <option value="{{productID}}">{{.}}</option>
             {{/records}}
             </select>
             </FORM>

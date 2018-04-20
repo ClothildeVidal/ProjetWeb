@@ -95,7 +95,7 @@ public class DAO {
     public List<String> existingProducts() throws DAOException {
         List<String> result = new LinkedList<>();
 //        String sql = "SELECT PRODUCT_ID, PRODUCT_CODE, PURCHASE_COST, DESCRIPTION FROM PRODUCT";
-        String sql = "SELECT DISTINCT DESCRIPTION FROM PRODUCT";
+        String sql = "SELECT PRODUCT_ID, DESCRIPTION FROM PRODUCT";
         try (Connection connection = myDataSource.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
@@ -103,6 +103,7 @@ public class DAO {
 //                int productID = rs.getInt("PRODUCT_ID");
 //                int productCode = rs.getInt("PRODUCT_CODE");
 //                float cost = rs.getFloat("PURCHASE_COST");
+//                int prodID = rs.getInt("PRODUCT_ID");
                 String description = rs.getString("DESCRIPTION");
                 result.add(description);
 //                Produits p = new Produits(productID, productCode, 0, cost, description);
@@ -151,7 +152,7 @@ public class DAO {
         return result;
     }
 
-    public int addCommande(String desc, int qte, int userID) throws SQLException {
+    public int addCommande(int prodID, int qte, int userID) throws SQLException {
         int result = 0;
         String sql = "INSERT INTO PURCHASE_ORDER VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = myDataSource.getConnection();
@@ -164,7 +165,7 @@ public class DAO {
             String dateString = formatter.format(currentTime_1);
             stmt.setInt(1, (30298005 + (int) (Math.random() * (99999999 - 30298005))));
             stmt.setInt(2, userID);
-            stmt.setInt(3, idDescription(desc));
+            stmt.setInt(3, prodID);
             stmt.setInt(4, qte);
             stmt.setFloat(5, qte);
             stmt.setString(6, dateString);
