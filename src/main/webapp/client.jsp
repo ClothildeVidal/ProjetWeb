@@ -13,62 +13,19 @@
         <!--On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable--> 
         <script type="text/javascript" 	src="javascript/jquery.jsontotable.min.js"></script>
         <script>
-            $(document).ready(// ExÃ©cutÃ© Ã  la fin du chargement de la page
+            $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
                        $('#newCommande').submit(affichageComm);
                         listProduits();
-//                        fillProductSelector();
-//                        showProduits();
                         showCommandes();
-
                     }
             );
 
             function affichageComm(event) {
                 event.preventDefault();
                 addProduct();
-                console.log("lala");
             }
 
-            function fillProductSelector() {
-                // On fait un appel AJAX pour chercher les produits existants
-                $.ajax({
-                    url: "allProduits",
-                    //url de la servlet ListProduitsJsonServlet
-                    dataType: "json",
-                    error: showError,
-                    success: // La fonction qui traite les rÃ©sultats
-                            function (result) {
-                                // Le code source du template est dans la page
-                                var template = $('#selectTemplate').html();
-                                // On combine le template avec le rÃ©sultat de la requÃªte
-                                var processedTemplate = Mustache.to_html(template, result);
-                                // On affiche la liste des options dans le select
-                                $('#product').html(processedTemplate);
-                                // On initialise l'affichage des clients
-                                showCustomersInState();
-                            }
-                });
-            }
-
-            function showProduits() {
-                // On fait un appel AJAX pour chercher les codes
-                $.ajax({
-                    url: "allProduits",
-                    //url de la servlet ListProduitsJsonServlet
-                    dataType: "json",
-                    error: showError,
-                    success: // La fonction qui traite les rÃ©sultats
-                            function (result) {
-                                // Le code source du template est dans la page
-                                var template = $('#ProduitsTemplate').html();
-                                // On combine le template avec le rÃ©sultat de la requÃªte
-                                var processedTemplate = Mustache.to_html(template, result);
-                                // On affiche la liste des options dans le select
-                                $('#produits').html(processedTemplate);
-                            }
-                });
-            }
             function showCommandes() {
                 // On fait un appel AJAX pour chercher les commandes
                 var name = "${userName}";
@@ -170,40 +127,12 @@
         </script>
         <form id="newCommande">
             <fieldset><legend>Ajout d'un produit à la commande</legend>
-                <!--                <form>
-                                    <label for="product">Produit :</label>-->
-                <!--<select id="product">-->
                 <div id="choixProduct"></div>
-                <!--</select>-->
-                <!--</form>-->
-                <!--Produit : <input id="code" name="code" size="1" maxlength="1" pattern="[A-Z]{1,1}" title="Une lettre en MAJUSCULES"><br/>-->
                 Quantité : <input id="taux" name="taux" type="number" step="1" min="0" max="1000" size="5"><br/>
                 <input type="submit" value="Ajouter">
             </fieldset>
         </form>
     </form>
-    <h3>Produits sélectionnés</h3>
-    <div id="produits"></div>
-    <!--        <script id="selectTemplate" type="text/template">
-                                    {{! Pour chaque produit dans le tableau}}
-                                    {{#records}}
-                                            {{! Une option dans le select }}
-                                            {{! le point reprÃ©sente la valeur courante du tableau }}
-                                            <OPTION VALUE="{{.}}">{{.}}</OPTION>
-                                    {{/records}}
-                            </TABLE>
-            </script>
-            Le template qui sert Ã  formatter la liste des codes 
-            <script id="produitsTemplate" type="text/template">
-                <TABLE>
-                <tr><th>OrderID</th><th>Produit</th><th>Quantite</th><th>Cout</th><th>Description</th></tr>
-                {{! Pour chaque enregistrement }}
-                {{#records}}
-                {{! Une ligne dans la table }}
-                <TR><TD>{{orderID}}</TD><TD>{{produit}}</TD><TD>{{quantite}}</TD><TD>{{cout}}</TD><TD>{{description}}</TD></TR>
-                {{/records}}
-                </TABLE>
-            </script>-->
     <h2>Anciennes commandes</h2>
     <div id="codes"></div>
     <!--Le template qui sert Ã  formatter la liste des codes--> 

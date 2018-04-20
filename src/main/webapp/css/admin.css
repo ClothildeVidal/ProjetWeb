@@ -1,0 +1,16 @@
+/*Definition du fond*/
+html{
+    background-image:url("../images/fond-admin.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+/*Mise en page du fomulaire*/
+html{
+    text-align:center;
+    font-family:"Roboto";
+    color:white;
+}
+a{
+    color:white;
+}

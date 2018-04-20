@@ -59,16 +59,7 @@
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
-    <!-- Un filtre qui vérifie que l'utilisateur est connecté -->
-    <filter>
-        <filter-name>ProtectedPagesFilter</filter-name>
-        <filter-class>Filters.ProtectedPagesFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ProtectedPagesFilter</filter-name>
-        <url-pattern>/protected/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
+    
     <!-- Un listener qui compte le nombre d'utilisateurs connectés à l'application -->
     <listener>
         <description>Counting connected users</description>

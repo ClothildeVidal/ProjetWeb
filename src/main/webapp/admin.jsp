@@ -4,10 +4,11 @@
 <html>
     <head>
         <title>Administrateur</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link rel="stylesheet" href="css/admin.css" type="text/css" media="screen" />
 
         <script>
             google.charts.load('current', {'packages':['corechart']});
@@ -22,7 +23,7 @@
 
             google.setOnLoadCallback(affichage);
 
-
+//            Fonction affichée lors du click sur le bouton 'afficher'
             function affichage(event) {
                 event.preventDefault();
                 google.charts.setOnLoadCallback(doAjax);
@@ -131,21 +132,25 @@
     </head>
     <body>
         <h1>Bienvenue ${userName}</h1>
-        Vous avez maintenant accès aux fichiers dans le répertoire 
-        "<a href="<c:url value="protected/protectedPage1.html"/>">protected</a>".<br>
         <form action="<c:url value='/'/>" method="POST"> 
             <input type='submit' name='action' value='Deconnexion'>
         </form>
         <hr/>
         <h3>Il y a actuellement ${applicationScope.numberConnected} utilisateurs connectés</h3>
+        <!--Liens vers les données brutes utilisées-->
         <a href='CaParProduit' target="_blank">Voir les données brutes du chiffre d'affaires par produit</a><br>
         <a href='CaParClient' target="_blank">Voir les données brutes du chiffre d'affaires par client</a><br>
         <a href='CaParZone' target="_blank">Voir les données brutes du chiffre d'affaires par produit</a><br>
+        <!--Formulaire pour afficher les données comprises entre 2 dates-->
         <form id="graphique">
+            <p>Choix de la période :</p><br>
+            <p> Du : </p>
             <input type="date" name="dateD" id="dateD">
+            <p> Au : </p>
             <input type="date" name="dateF" id="dateF">
             <input type='submit' value='Afficher'>
         </form>
+        <!--Endroit où les graphiques vont s'afficher-->
         <div id="piechart" style="width: 900px; height: 500px;"></div>
         <div id="piechart2" style="width: 900px; height: 500px;"></div>
         <div id="piechart3" style="width: 900px; height: 500px;"></div>
