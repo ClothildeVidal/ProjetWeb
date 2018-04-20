@@ -1,0 +1,15 @@
+/*Definition du fond*/
+html{ 
+    background-image :  url("../images/fond.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*Mise en page du corps de la page*/
+html{
+    font-family:"Roboto";
+    color:#FFFFFF;}
+
+a{
+    color:white;
+}

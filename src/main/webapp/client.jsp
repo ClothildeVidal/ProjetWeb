@@ -12,6 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
         <!--On charge le plugin JSONToTable https://github.com/jongha/jquery-jsontotable--> 
         <script type="text/javascript" 	src="javascript/jquery.jsontotable.min.js"></script>
+        <link rel="stylesheet" href="css/client.css" type="text/css" media="screen" />
         <script>
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
